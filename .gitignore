@@ -33,4 +33,6 @@ build
 
 gradle
 gradle/
+.kotlin
+.kotlin/
 
