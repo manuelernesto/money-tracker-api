@@ -22,6 +22,9 @@ data class User(val userId: Long? = null, val username: String, var password: St
     }
 }
 
+@Serializable
+data class PasswordUpdate(val oldPassword: String, val newPassword: String)
+
 object Users : Table() {
     val id = long("userId").autoIncrement()
     val username = varchar("username", 255).uniqueIndex()
