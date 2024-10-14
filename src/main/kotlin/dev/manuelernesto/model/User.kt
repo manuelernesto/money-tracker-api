@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.Table
  * @version 1.0
  */
 @Serializable
-data class User(val userId: Long? = null, val username: String, val password: String, val email: String?) {
+data class User(val userId: Long? = null, val username: String, var password: String, val email: String?) {
 
     companion object {
         fun fromResultRow(row: ResultRow) = User(
