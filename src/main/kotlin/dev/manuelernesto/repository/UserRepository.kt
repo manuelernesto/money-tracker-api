@@ -43,8 +43,8 @@ class UserRepository() {
         }
     }
 
-    suspend fun delete(userId: Long): Unit = dbQuery {
-        Users.deleteWhere { Users.id eq userId }
+    suspend fun delete(userId: Long) = dbQuery {
+        Users.deleteWhere() { id eq userId }
     }
 
 }

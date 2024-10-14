@@ -6,3 +6,5 @@ package dev.manuelernesto.exceptions
  * @version 1.0
  */
 class UserAlreadyExistsException(message: String): Exception(message)
+class UserCredentialException(message: String): Exception(message)
+class UserNotExistsException(message: String): Exception(message)
