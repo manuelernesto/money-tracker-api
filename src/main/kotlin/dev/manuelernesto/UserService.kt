@@ -6,7 +6,6 @@ import dev.manuelernesto.exceptions.UserNotExistsException
 import dev.manuelernesto.model.User
 import dev.manuelernesto.repository.UserRepository
 import org.mindrot.jbcrypt.BCrypt
-import sun.security.util.Password
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
