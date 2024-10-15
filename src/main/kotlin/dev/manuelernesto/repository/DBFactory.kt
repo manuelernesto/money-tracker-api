@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
-import io.ktor.server.application.*
+
 /**
  * @author  Manuel Ernesto (manuelernest0)
  * @date  14/10/24 7:33 PM
