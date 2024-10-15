@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
-
+import io.ktor.server.application.*
 /**
  * @author  Manuel Ernesto (manuelernest0)
  * @date  14/10/24 7:33 PM
@@ -15,12 +15,15 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object DBFactory {
 
+    val dbUser = System.getenv("DB_USER") ?: throw IllegalStateException("DB_USER environment variable not set")
+    val dbPassword = System.getenv("DB_PASSWORD")?: throw IllegalStateException("DB_PASSWORD environment variable not set")
+
     fun init() {
         Database.connect(
-            url = "jdbc:postgresql://localhost:5432/money-tracker-db",
+            url = "jdbc:postgresql://localhost:5432/money_tracker_db",
             driver = "org.postgresql.Driver",
-            user = "postgres",
-            password = "password"
+            user = dbUser,
+            password = dbPassword
         )
 
         transaction {

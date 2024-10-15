@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.Table
  * @version 1.0
  */
 @Serializable
-data class User(val userId: Long? = null, val username: String, var password: String, val email: String?) {
+data class User(val userId: Long? = null, val username: String, var password: String, val email: String? = null) {
 
     companion object {
         fun fromResultRow(row: ResultRow) = User(
@@ -29,7 +29,7 @@ object Users : Table() {
     val id = long("userId").autoIncrement()
     val username = varchar("username", 255).uniqueIndex()
     val password = varchar("password", 255)
-    val email = varchar("password", 255).nullable()
+    val email = varchar("email", 255).nullable()
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }
