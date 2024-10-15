@@ -3,6 +3,7 @@ package dev.manuelernesto.routes
 import dev.manuelernesto.model.PasswordUpdate
 import dev.manuelernesto.service.UserService
 import dev.manuelernesto.model.User
+import dev.manuelernesto.model.toUserResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
@@ -24,11 +25,11 @@ fun Route.userRoute(userService: UserService) {
 
         get("/{id}") {
             val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
-            call.respond(userService.getUserById(id.toLong()) as Any)
+            call.respond(userService.getUserById(id.toLong())?.toUserResponse() as Any)
         }
         post {
             val user = call.receive<User>()
-            val createdUser = userService.createUser(user)
+            val createdUser = userService.createUser(user)?.toUserResponse()
             call.respond(status = HttpStatusCode.Created, createdUser as Any)
         }
 

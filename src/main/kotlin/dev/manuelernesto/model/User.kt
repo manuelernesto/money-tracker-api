@@ -20,7 +20,13 @@ data class User(val userId: Long? = null, val username: String, var password: St
             email = row[Users.email]
         )
     }
+
 }
+
+@Serializable
+data class UserResponse(val userId: Long? = null, val username: String, val email: String? = null)
+
+fun User.toUserResponse() = UserResponse(this.userId, this.username, this.email)
 
 @Serializable
 data class PasswordUpdate(val oldPassword: String, val newPassword: String)

@@ -3,7 +3,8 @@ Content-Type: application/json
 
 {
   "username": "manuelernesto",
-  "password": "A2j34567?0"
+  "password": "A2j34567?0",
+  "email": "hi@manuelernesto.dev"
 }
 
 ###
@@ -15,3 +16,12 @@ Content-Type: application/json
   "oldPassword": "A2j34567?0",
   "newPassword": "A2j34567?1"
 }
+
+
+###
+GET 0.0.0.0:8080/api/users/1
+Content-Type: application/json
+
+###
+DELETE 0.0.0.0:8080/api/users/1
+Content-Type: application/json
