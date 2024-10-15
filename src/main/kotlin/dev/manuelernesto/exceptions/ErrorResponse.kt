@@ -25,7 +25,7 @@ fun StatusPagesConfig.statusPageErrorConfig() {
     exception<UserAlreadyExistsException> { call, cause ->
         val errorResponse = ErrorResponse(
             status = HttpStatusCode.BadRequest.value,
-            message = "Invalid username: ${cause.message}"
+            message = cause.message.toString()
         )
         call.respond(HttpStatusCode.BadRequest, errorResponse)
     }
@@ -33,7 +33,7 @@ fun StatusPagesConfig.statusPageErrorConfig() {
     exception<UserCredentialException> { call, cause ->
         val errorResponse = ErrorResponse(
             status = HttpStatusCode.BadRequest.value,
-            message = "Invalid password: ${cause.message}"
+            message = cause.message.toString()
         )
         call.respond(HttpStatusCode.BadRequest, errorResponse)
     }
@@ -41,7 +41,7 @@ fun StatusPagesConfig.statusPageErrorConfig() {
     exception<UserNotExistsException> { call, cause ->
         val errorResponse = ErrorResponse(
             status = HttpStatusCode.BadRequest.value,
-            message = "Invalid user: ${cause.message}"
+            message = cause.message.toString()
         )
         call.respond(HttpStatusCode.BadRequest, errorResponse)
     }
