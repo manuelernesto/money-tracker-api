@@ -1,8 +1,8 @@
 package dev.manuelernesto.repository
 
+import dev.manuelernesto.config.dbQuery
 import dev.manuelernesto.model.User
 import dev.manuelernesto.model.schemas.Users
-import dev.manuelernesto.repository.DBFactory.dbQuery
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert

@@ -19,7 +19,7 @@ Content-Type: application/json
 
 
 ###
-GET 0.0.0.0:8080/api/users/1
+GET 0.0.0.0:8080/api/users/2
 Content-Type: application/json
 
 ###

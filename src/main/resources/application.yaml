@@ -5,11 +5,7 @@ ktor:
   deployment:
     port: 8080
   database:
-    url:
-      - "jdbc:postgresql://localhost:5432/money_tracker_db"
-    driver:
-      - "org.postgresql.Driver"
-    user:
-      - user
-    password:
-      - pwd
+    driver: "org.postgresql.Driver"
+    url: $DB_URL
+    username: $DB_USER
+    password: $DB_PASSWORD
