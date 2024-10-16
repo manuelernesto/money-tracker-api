@@ -33,4 +33,9 @@ build
 
 gradle
 gradle/
+.kotlin
+.kotlin/
+
+.env
+.env/
 
