@@ -1,8 +1,8 @@
 package dev.manuelernesto.model
 
+import dev.manuelernesto.model.schemas.Users
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.Table
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -11,7 +11,6 @@ import org.jetbrains.exposed.sql.Table
  */
 @Serializable
 data class User(val userId: Long? = null, val username: String, var password: String, val email: String? = null) {
-
     companion object {
         fun fromResultRow(row: ResultRow) = User(
             userId = row[Users.id],
@@ -20,22 +19,5 @@ data class User(val userId: Long? = null, val username: String, var password: St
             email = row[Users.email]
         )
     }
-
 }
 
-@Serializable
-data class UserResponse(val userId: Long? = null, val username: String, val email: String? = null)
-
-fun User.toUserResponse() = UserResponse(this.userId, this.username, this.email)
-
-@Serializable
-data class PasswordUpdate(val oldPassword: String, val newPassword: String)
-
-object Users : Table() {
-    val id = long("userId").autoIncrement()
-    val username = varchar("username", 255).uniqueIndex()
-    val password = varchar("password", 255)
-    val email = varchar("email", 255).nullable()
-
-    override val primaryKey: PrimaryKey = PrimaryKey(id)
-}
