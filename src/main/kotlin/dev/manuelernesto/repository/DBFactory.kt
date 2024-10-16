@@ -1,7 +1,7 @@
 package dev.manuelernesto.repository
 
 import com.typesafe.config.ConfigFactory
-import dev.manuelernesto.model.Users
+import dev.manuelernesto.model.schemas.Users
 import io.ktor.server.config.HoconApplicationConfig
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
@@ -27,7 +27,7 @@ object DBFactory {
         Database.connect(
             url = "jdbc:postgresql://localhost:5432/money_tracker_db",
             driver = "org.postgresql.Driver",
-            user = dbUser,
+            user = config.config("").toString(),
             password = dbPassword
         )
 
