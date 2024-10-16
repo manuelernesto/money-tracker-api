@@ -1,9 +1,9 @@
 package dev.manuelernesto.routes
 
 import dev.manuelernesto.model.PasswordUpdate
-import dev.manuelernesto.service.UserService
 import dev.manuelernesto.model.User
-import dev.manuelernesto.model.toUserResponse
+import dev.manuelernesto.service.UserService
+import dev.manuelernesto.util.toUserResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond

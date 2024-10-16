@@ -1,7 +1,7 @@
 package dev.manuelernesto.util
 
 import dev.manuelernesto.model.User
-import dev.manuelernesto.model.UserResponse
+import dev.manuelernesto.model.response.UserResponse
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
