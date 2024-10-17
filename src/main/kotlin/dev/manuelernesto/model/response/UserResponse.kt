@@ -1,6 +1,8 @@
 package dev.manuelernesto.model.response
 
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
+import java.util.UUID
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -9,4 +11,4 @@ import kotlinx.serialization.Serializable
  */
 
 @Serializable
-data class UserResponse(val userId: Long? = null, val username: String, val email: String? = null)
+data class UserResponse(@Contextual val userId: UUID? = null, val username: String, val email: String? = null)

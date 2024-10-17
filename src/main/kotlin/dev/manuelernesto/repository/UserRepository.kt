@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.update
 import org.jetbrains.exposed.sql.upperCase
+import java.util.UUID
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -27,7 +28,7 @@ class UserRepository() {
         inserted.resultedValues?.singleOrNull()?.let { User.fromResultRow(it) }
     }
 
-    suspend fun getUserById(userId: Long): User? = dbQuery {
+    suspend fun getUserById(userId: UUID): User? = dbQuery {
         Users.selectAll().where { Users.id eq userId }.map { User.fromResultRow(it) }.singleOrNull()
     }
 
@@ -37,13 +38,13 @@ class UserRepository() {
             .singleOrNull()
     }
 
-    suspend fun updatePassword(userId: Long, pwd: String) = dbQuery {
+    suspend fun updatePassword(userId: UUID, pwd: String) = dbQuery {
         Users.update({ Users.id eq userId }) {
             it[password] = pwd
         }
     }
 
-    suspend fun delete(userId: Long) = dbQuery {
+    suspend fun delete(userId: UUID) = dbQuery {
         Users.deleteWhere() { id eq userId }
     }
 

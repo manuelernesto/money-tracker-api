@@ -7,6 +7,7 @@ import dev.manuelernesto.model.PasswordUpdate
 import dev.manuelernesto.model.User
 import dev.manuelernesto.repository.UserRepository
 import org.mindrot.jbcrypt.BCrypt
+import java.util.UUID
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -15,11 +16,11 @@ import org.mindrot.jbcrypt.BCrypt
  */
 class UserService(private val userRepository: UserRepository) {
 
-    suspend fun getUserById(userId: Long): User? =
+    suspend fun getUserById(userId: UUID): User? =
         userRepository.getUserById(userId) ?: throw UserNotExistsException("User with ID $userId does not exist!")
 
 
-    suspend fun updatePassword(userId: Long, passwordUpdate: PasswordUpdate) {
+    suspend fun updatePassword(userId: UUID, passwordUpdate: PasswordUpdate) {
         val user =
             userRepository.getUserById(userId) ?: throw UserNotExistsException("User with ID $userId does not exist!")
 
@@ -57,7 +58,7 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.save(user)
     }
 
-    suspend fun deleteUserById(userId: Long) {
+    suspend fun deleteUserById(userId: UUID) {
         val user = userRepository.delete(userId)
 
         if (user <= 0) {

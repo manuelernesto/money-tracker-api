@@ -13,6 +13,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
+import java.util.UUID
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -25,7 +26,7 @@ fun Route.userRoute(userService: UserService) {
 
         get("/{id}") {
             val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
-            call.respond(userService.getUserById(id.toLong())?.toUserResponse() as Any)
+            call.respond(userService.getUserById(UUID.fromString(id))?.toUserResponse() as Any)
         }
         post {
             val user = call.receive<User>()
@@ -36,13 +37,13 @@ fun Route.userRoute(userService: UserService) {
         put("/{id}/new-password") {
             val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
             val password = call.receive<PasswordUpdate>()
-            userService.updatePassword(id.toLong(), password)
+            userService.updatePassword(UUID.fromString(id), password)
             call.respond(HttpStatusCode.OK)
         }
 
         delete("/{id}") {
             val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
-            userService.deleteUserById(id.toLong())
+            userService.deleteUserById(UUID.fromString(id))
             call.respond(HttpStatusCode.NoContent)
         }
     }
