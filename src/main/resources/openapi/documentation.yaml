@@ -6,6 +6,107 @@ info:
 servers:
 - url: "https://money_tracker_api"
 paths:
+  /api/categories:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+  /api/categories/{id}:
+    delete:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "204":
+          description: "No Content"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /api/users:
     post:
       description: ""
@@ -111,12 +212,25 @@ components:
           type: "string"
       required:
       - "message"
+    Object:
+      type: "object"
+      properties: {}
+    Category:
+      type: "object"
+      properties:
+        categoryId:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+      required:
+      - "name"
     User:
       type: "object"
       properties:
         userId:
-          type: "integer"
-          format: "int64"
+          type: "string"
+          format: "uuid"
         username:
           type: "string"
         password:
@@ -126,9 +240,6 @@ components:
       required:
       - "username"
       - "password"
-    Object:
-      type: "object"
-      properties: {}
     PasswordUpdate:
       type: "object"
       properties:
