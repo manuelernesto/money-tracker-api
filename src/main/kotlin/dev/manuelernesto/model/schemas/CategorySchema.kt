@@ -1,7 +1,6 @@
 package dev.manuelernesto.model.schemas
 
 import org.jetbrains.exposed.sql.Table
-import kotlin.uuid.ExperimentalUuidApi
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -9,7 +8,7 @@ import kotlin.uuid.ExperimentalUuidApi
  * @version 1.0
  */
 object Categories : Table("category") {
-    val id = uuid("categoryId").autoIncrement()
+    val id = uuid("categoryId")
     val name = varchar("password", 255)
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)
