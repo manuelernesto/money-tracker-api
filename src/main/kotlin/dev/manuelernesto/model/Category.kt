@@ -1,6 +1,10 @@
 package dev.manuelernesto.model
 
+import dev.manuelernesto.model.schemas.Categories
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.sql.ResultRow
+import java.util.UUID
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -8,4 +12,11 @@ import kotlinx.serialization.Serializable
  * @version 1.0
  */
 @Serializable
-data class Category(val categoryId: String? = null, val name: String)
+data class Category(@Contextual val categoryId: UUID? = null, val name: String) {
+    companion object {
+        fun fromResultRow(row: ResultRow) = Category(
+            categoryId = row[Categories.id],
+            name = row[Categories.name]
+        )
+    }
+}
