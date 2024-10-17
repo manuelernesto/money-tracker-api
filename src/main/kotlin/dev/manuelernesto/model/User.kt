@@ -1,8 +1,10 @@
 package dev.manuelernesto.model
 
 import dev.manuelernesto.model.schemas.Users
+import dev.manuelernesto.util.UUIDSerializer
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.ResultRow
+import java.util.UUID
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -10,7 +12,12 @@ import org.jetbrains.exposed.sql.ResultRow
  * @version 1.0
  */
 @Serializable
-data class User(val userId: Long? = null, val username: String, var password: String, val email: String? = null) {
+data class User(
+    @Serializable(with = UUIDSerializer::class) val userId: UUID? = null,
+    val username: String,
+    var password: String,
+    val email: String? = null,
+) {
     companion object {
         fun fromResultRow(row: ResultRow) = User(
             userId = row[Users.id],

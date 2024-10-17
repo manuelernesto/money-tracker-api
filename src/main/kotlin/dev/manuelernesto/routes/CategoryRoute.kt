@@ -1,9 +1,7 @@
 package dev.manuelernesto.routes
 
-import dev.manuelernesto.model.PasswordUpdate
-import dev.manuelernesto.model.User
-import dev.manuelernesto.service.UserService
-import dev.manuelernesto.util.toUserResponse
+import dev.manuelernesto.model.Category
+import dev.manuelernesto.service.CategoryService
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
@@ -21,29 +19,33 @@ import java.util.UUID
  * @version 1.0
  */
 
-fun Route.userRoute(userService: UserService) {
-    route("/api/users") {
+fun Route.categoryRoute(categoryService: CategoryService) {
+    route("/api/categories") {
+
+        get {
+            call.respond(categoryService.getAllCategories() as Any)
+        }
 
         get("/{id}") {
             val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
-            call.respond(userService.getUserById(UUID.fromString(id))?.toUserResponse() as Any)
+            call.respond(categoryService.getCategoryById(UUID.fromString(id)) as Any)
         }
         post {
-            val user = call.receive<User>()
-            val createdUser = userService.createUser(user)?.toUserResponse()
-            call.respond(status = HttpStatusCode.Created, createdUser as Any)
+            val category = call.receive<Category>()
+            val createdCategory = categoryService.createCategory(category)
+            call.respond(status = HttpStatusCode.Created, createdCategory as Any)
         }
 
-        put("/{id}/new-password") {
+        put("/{id}") {
             val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
-            val password = call.receive<PasswordUpdate>()
-            userService.updatePassword(UUID.fromString(id), password)
+            val category = call.receive<Category>()
+            categoryService.updateCategory(UUID.fromString(id), category)
             call.respond(HttpStatusCode.OK)
         }
 
         delete("/{id}") {
             val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
-            userService.deleteUserById(UUID.fromString(id))
+            categoryService.deleteCategory(UUID.fromString(id))
             call.respond(HttpStatusCode.NoContent)
         }
     }
