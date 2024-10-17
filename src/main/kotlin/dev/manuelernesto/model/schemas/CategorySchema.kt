@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.Table
  * @date  17/10/24 8:56 PM
  * @version 1.0
  */
-object Categories : Table("category") {
+object Categories : Table("transactioncategory") {
     val id = uuid("categoryId")
     val name = varchar("password", 255)
 

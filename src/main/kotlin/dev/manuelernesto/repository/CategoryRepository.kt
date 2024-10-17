@@ -8,6 +8,7 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.update
+import org.jetbrains.exposed.sql.upperCase
 import java.util.UUID
 
 /**
@@ -25,11 +26,11 @@ class CategoryRepository {
         inserted.resultedValues?.singleOrNull()?.let { Category.fromResultRow(it) }
     }
 
-    suspend fun getAll(): List<Category>? = dbQuery {
+    suspend fun getAll(): List<Category> = dbQuery {
         Categories.selectAll().map { Category.fromResultRow(it) }
     }
 
-    suspend fun getUserById(categoryId: UUID): Category? = dbQuery {
+    suspend fun getCategoryById(categoryId: UUID): Category? = dbQuery {
         Categories.selectAll().where { Categories.id eq categoryId }.map { Category.fromResultRow(it) }.singleOrNull()
     }
 
@@ -41,5 +42,11 @@ class CategoryRepository {
 
     suspend fun delete(categoryId: UUID) = dbQuery {
         Categories.deleteWhere() { id eq categoryId }
+    }
+
+    suspend fun getCategoryByName(name: String): Category? = dbQuery {
+        Categories.selectAll().where { Categories.name.upperCase() like name.uppercase() }
+            .map { Category.fromResultRow(it) }
+            .singleOrNull()
     }
 }
