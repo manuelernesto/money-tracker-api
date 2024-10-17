@@ -19,6 +19,7 @@ import java.util.UUID
 class CategoryRepository {
     suspend fun save(category: Category): Category? = dbQuery {
         val inserted = Categories.insert {
+            it[id] = UUID.randomUUID()
             it[name] = category.name
         }
         inserted.resultedValues?.singleOrNull()?.let { Category.fromResultRow(it) }

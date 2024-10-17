@@ -2,7 +2,7 @@ POST http://0.0.0.0:8080/api/users
 Content-Type: application/json
 
 {
-  "username": "manuelernesto",
+  "username": "manuelernest01",
   "password": "A2j34567?0",
   "email": "hi@manuelernesto.dev"
 }
@@ -19,9 +19,9 @@ Content-Type: application/json
 
 
 ###
-GET 0.0.0.0:8080/api/users/2
+GET 0.0.0.0:8080/api/users/2233bcfe-b570-423b-b51b-17363a0be578
 Content-Type: application/json
 
 ###
-DELETE 0.0.0.0:8080/api/users/1
+DELETE 0.0.0.0:8080/api/users/2233bcfe-b570-423b-b51b-17363a0be57
 Content-Type: application/json

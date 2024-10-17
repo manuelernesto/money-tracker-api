@@ -21,6 +21,7 @@ class UserRepository() {
 
     suspend fun save(user: User): User? = dbQuery {
         val inserted = Users.insert {
+            it[id] = UUID.randomUUID()
             it[username] = user.username
             it[password] = user.password
             it[email] = user.email

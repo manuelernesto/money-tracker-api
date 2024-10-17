@@ -1,6 +1,6 @@
 package dev.manuelernesto.model.response
 
-import kotlinx.serialization.Contextual
+import dev.manuelernesto.util.UUIDSerializer
 import kotlinx.serialization.Serializable
 import java.util.UUID
 
@@ -11,4 +11,8 @@ import java.util.UUID
  */
 
 @Serializable
-data class UserResponse(@Contextual val userId: UUID? = null, val username: String, val email: String? = null)
+data class UserResponse(
+    @Serializable(with = UUIDSerializer::class) val userId: UUID? = null,
+    val username: String,
+    val email: String? = null,
+)

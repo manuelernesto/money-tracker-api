@@ -1,7 +1,7 @@
 package dev.manuelernesto.model
 
 import dev.manuelernesto.model.schemas.Users
-import kotlinx.serialization.Contextual
+import dev.manuelernesto.util.UUIDSerializer
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.ResultRow
 import java.util.UUID
@@ -13,7 +13,7 @@ import java.util.UUID
  */
 @Serializable
 data class User(
-    @Contextual val userId: UUID? = null,
+    @Serializable(with = UUIDSerializer::class) val userId: UUID? = null,
     val username: String,
     var password: String,
     val email: String? = null,
