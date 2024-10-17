@@ -1,0 +1,141 @@
+openapi: "3.1.0"
+info:
+  title: "money_tracker_api API"
+  description: "money_tracker_api API"
+  version: "1.0.0"
+servers:
+- url: "https://money_tracker_api"
+paths:
+  /api/users:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+  /api/users/{id}:
+    delete:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "204":
+          description: "No Content"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+  /api/users/{id}/new-password:
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasswordUpdate"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+components:
+  schemas:
+    ErrorResponse:
+      type: "object"
+      properties:
+        status:
+          type: "integer"
+          format: "int32"
+        message:
+          type: "string"
+      required:
+      - "message"
+    User:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+          format: "int64"
+        username:
+          type: "string"
+        password:
+          type: "string"
+        email:
+          type: "string"
+      required:
+      - "username"
+      - "password"
+    Object:
+      type: "object"
+      properties: {}
+    PasswordUpdate:
+      type: "object"
+      properties:
+        oldPassword:
+          type: "string"
+        newPassword:
+          type: "string"
+      required:
+      - "oldPassword"
+      - "newPassword"
