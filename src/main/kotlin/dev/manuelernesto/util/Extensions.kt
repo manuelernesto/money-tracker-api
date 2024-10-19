@@ -1,6 +1,8 @@
 package dev.manuelernesto.util
 
+import dev.manuelernesto.model.Account
 import dev.manuelernesto.model.User
+import dev.manuelernesto.model.request.AccountRequest
 import dev.manuelernesto.model.response.UserResponse
 
 /**
@@ -11,3 +13,12 @@ import dev.manuelernesto.model.response.UserResponse
 
 
 fun User.toUserResponse() = UserResponse(this.userId, this.username, this.email)
+
+fun AccountRequest.toAccount() = Account(
+    userId = this.userId,
+    name = this.name,
+    balance = this.balance,
+    type = this.type,
+    description = this.description,
+    institution = this.institution
+)
