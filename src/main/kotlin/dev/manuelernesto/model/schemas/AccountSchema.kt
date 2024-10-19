@@ -2,13 +2,14 @@ package dev.manuelernesto.model.schemas
 
 import dev.manuelernesto.model.enums.AccountType
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.javatime.datetime
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
  * @date  19/10/24 9:30 PM
  * @version 1.0
  */
-object Accounts: Table("account") {
+object Accounts : Table("account") {
     val id = uuid("id")
     val userId = (uuid("user_id") references Users.id)
     val name = varchar("name", 255)
@@ -18,7 +19,7 @@ object Accounts: Table("account") {
     val description = text("description").nullable()
     val isClosed = bool("is_closed")
     val createdAt = datetime("created_at")
-    val updatedAt = datetime("updated_at")
+    val updatedAt = datetime("updated_at").nullable()
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }

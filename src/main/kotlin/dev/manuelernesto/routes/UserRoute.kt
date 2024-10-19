@@ -49,7 +49,6 @@ fun Route.userRoute(userService: UserService, accountService: AccountService) {
             call.respond(HttpStatusCode.NoContent)
         }
 
-
         post("/{id}/accounts") {
             val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
             val account = call.receive<AccountRequest>()

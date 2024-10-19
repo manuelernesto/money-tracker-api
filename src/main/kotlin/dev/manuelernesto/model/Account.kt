@@ -1,7 +1,6 @@
 package dev.manuelernesto.model
 
 import dev.manuelernesto.model.enums.AccountType
-import dev.manuelernesto.model.response.UserResponse
 import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.util.BigDecimalSerializer
 import dev.manuelernesto.util.UUIDSerializer
@@ -25,8 +24,8 @@ data class Account(
     val type: AccountType = AccountType.CURRENT,
     val institution: String? = null,
     val description: String? = null,
-    val isClosed: Boolean? = false,
-    val createdAt: Instant? = null,
+    val isClosed: Boolean = false,
+    val createdAt: Instant? = Instant.now(),
     val updatedAt: Instant? = null,
 ) {
 
