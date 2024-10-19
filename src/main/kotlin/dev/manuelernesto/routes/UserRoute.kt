@@ -22,7 +22,7 @@ import java.util.UUID
  */
 
 fun Route.userRoute(userService: UserService) {
-    route("/api/users") {
+    route("/api/v1/users") {
 
         get("/{id}") {
             val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
@@ -45,6 +45,15 @@ fun Route.userRoute(userService: UserService) {
             val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
             userService.deleteUserById(UUID.fromString(id))
             call.respond(HttpStatusCode.NoContent)
+        }
+
+
+        post("/{id}/accounts") {
+            //TODO create account for user
+        }
+
+        get("/{id}/accounts") {
+            //TODO  get account by userID
         }
     }
 }

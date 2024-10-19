@@ -1,6 +1,6 @@
 ### USERS
 
-POST http://0.0.0.0:8080/api/users
+POST http://0.0.0.0:8080/api/v1/users
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://0.0.0.0:8080/api/users/1/new-password
+PUT http://0.0.0.0:8080/api/v1/users/1/new-password
 Content-Type: application/json
 
 {
@@ -21,25 +21,25 @@ Content-Type: application/json
 
 
 ###
-GET 0.0.0.0:8080/api/users/2233bcfe-b570-423b-b51b-17363a0be578
+GET 0.0.0.0:8080/api/v1/users/2233bcfe-b570-423b-b51b-17363a0be578
 Content-Type: application/json
 
 ###
-DELETE 0.0.0.0:8080/api/users/2233bcfe-b570-423b-b51b-17363a0be57
+DELETE 0.0.0.0:8080/api/v1/users/2233bcfe-b570-423b-b51b-17363a0be57
 Content-Type: application/json
 
 
 ### CATEGORIES
-GET 0.0.0.0:8080/api/categories/e55f8056-55c4-4686-9c74-9f8180960ef2
+GET 0.0.0.0:8080/api/v1/categories/e55f8056-55c4-4686-9c74-9f8180960ef2
 Content-Type: application/json
 
 ###
-GET 0.0.0.0:8080/api/categories
+GET 0.0.0.0:8080/api/v1/categories
 Content-Type: application/json
 
 ### USERS
 
-POST http://0.0.0.0:8080/api/categories
+POST http://0.0.0.0:8080/api/v1/categories
 Content-Type: application/json
 
 {
@@ -47,11 +47,11 @@ Content-Type: application/json
 }
 
 ###
-DELETE 0.0.0.0:8080/api/categories/e55f8056-55c4-4686-9c74-9f8180960ef2
+DELETE 0.0.0.0:8080/api/v1/categories/e55f8056-55c4-4686-9c74-9f8180960ef2
 Content-Type: application/json
 
 ###
-PUT http://0.0.0.0:8080/api/categories/b8f391fa-12b4-498f-81b8-13a30ad42ff3
+PUT http://0.0.0.0:8080/api/v1/categories/b8f391fa-12b4-498f-81b8-13a30ad42ff3
 Content-Type: application/json
 
 {

@@ -20,7 +20,7 @@ import java.util.UUID
  */
 
 fun Route.categoryRoute(categoryService: CategoryService) {
-    route("/api/categories") {
+    route("/api/v1/categories") {
 
         get {
             call.respond(categoryService.getAllCategories() as Any)
