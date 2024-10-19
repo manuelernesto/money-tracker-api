@@ -1,6 +1,7 @@
 package dev.manuelernesto.model
 
 import dev.manuelernesto.model.enums.AccountType
+import dev.manuelernesto.model.response.UserResponse
 import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.util.UUIDSerializer
 import kotlinx.serialization.Serializable
@@ -16,7 +17,7 @@ import java.util.UUID
  */
 data class Account(
     @Serializable(with = UUIDSerializer::class) val accountId: UUID? = null,
-    val userId: User,
+    val user: UserResponse,
     val name: String,
     val balance: BigDecimal = BigDecimal.ZERO,
     val type: AccountType = AccountType.CURRENT,
@@ -30,7 +31,15 @@ data class Account(
     companion object {
         fun fromResultRow(row: ResultRow) = Account(
             accountId = row[Accounts.id],
-            userId = row[Accounts.id]
+            user = UserResponse(userId = row[Accounts.userId], ""),
+            name = row[Accounts.name],
+            balance = row[Accounts.balance],
+            type = row[Accounts.type],
+            institution = row[Accounts.institution],
+            description = row[Accounts.description],
+            isClosed = row[Accounts.isClosed],
+            createdAt = row[Accounts.createdAt],
+            updatedAt = row[Accounts.updatedAt]
         )
     }
 }
