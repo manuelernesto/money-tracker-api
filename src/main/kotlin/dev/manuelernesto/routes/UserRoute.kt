@@ -2,6 +2,8 @@ package dev.manuelernesto.routes
 
 import dev.manuelernesto.model.PasswordUpdate
 import dev.manuelernesto.model.User
+import dev.manuelernesto.model.request.AccountRequest
+import dev.manuelernesto.service.AccountService
 import dev.manuelernesto.service.UserService
 import dev.manuelernesto.util.toUserResponse
 import io.ktor.http.HttpStatusCode
@@ -21,7 +23,7 @@ import java.util.UUID
  * @version 1.0
  */
 
-fun Route.userRoute(userService: UserService) {
+fun Route.userRoute(userService: UserService, accountService: AccountService) {
     route("/api/v1/users") {
 
         get("/{id}") {
@@ -49,7 +51,10 @@ fun Route.userRoute(userService: UserService) {
 
 
         post("/{id}/accounts") {
-            //TODO create account for user
+            val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+            val account = call.receive<AccountRequest>()
+            val createdAccount = accountService.createAccount(UUID.fromString(id), account)
+            call.respond(status = HttpStatusCode.Created, createdAccount as Any)
         }
 
         get("/{id}/accounts") {
