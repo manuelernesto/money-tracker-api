@@ -74,3 +74,7 @@ Content-Type: application/json
 ###
 GET http://0.0.0.0:8080/api/v1/users/9d3f6ba7-3fad-432d-92c1-d77312bd9cf6/accounts
 Content-Type: application/json
+
+###
+GET http://0.0.0.0:8080/api/v1/accounts/9d3f6ba7-3fad-432d-92c1-d77312bd9cf6
+Content-Type: application/json
