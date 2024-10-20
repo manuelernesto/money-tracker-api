@@ -1,5 +1,6 @@
 package dev.manuelernesto.config
 
+import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.model.schemas.Categories
 import dev.manuelernesto.model.schemas.Users
 import io.ktor.server.application.Application
@@ -40,7 +41,7 @@ fun Application.configureDB() {
     )
 
     transaction {
-        SchemaUtils.create(Users, Categories)
+        SchemaUtils.create(Users, Categories, Accounts)
     }
 }
 

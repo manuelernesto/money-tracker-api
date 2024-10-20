@@ -8,7 +8,7 @@ package dev.manuelernesto.model.enums
 enum class AccountType(private val description: String) {
     CURRENT("Current Account"),
     CHECKING("Checking Account"),
-    SAVING_("Savings Account"),
+    SAVING("Savings Account"),
     CREDIT_CARD("Credit Card"),
     INVESTMENT("Investment"),
     CASH("Cash Account"),

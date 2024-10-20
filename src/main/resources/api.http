@@ -57,3 +57,15 @@ Content-Type: application/json
 {
   "name": "LOAN"
 }
+
+### ACCOUNTS
+POST http://0.0.0.0:8080/api/v1/users/9d3f6ba7-3fad-432d-92c1-d77312bd9cf6/accounts
+Content-Type: application/json
+
+{
+  "name": "Personal Account",
+  "balance": "100.0",
+  "description": "My personal account from SBA",
+  "institution": "SBA",
+  "type": "CURRENT"
+}

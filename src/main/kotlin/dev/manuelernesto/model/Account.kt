@@ -8,7 +8,6 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.ResultRow
 import java.math.BigDecimal
-import java.time.Instant
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -20,7 +19,7 @@ import java.util.UUID
 @Serializable
 data class Account(
     @Serializable(with = UUIDSerializer::class) val accountId: UUID? = null,
-    @Serializable(with = UUIDSerializer::class) var userId: UUID,
+    @Serializable(with = UUIDSerializer::class) var userId: UUID? = null,
     val name: String,
     @Serializable(with = BigDecimalSerializer::class) val balance: BigDecimal = BigDecimal.ZERO,
     val type: AccountType = AccountType.CURRENT,

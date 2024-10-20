@@ -12,10 +12,10 @@ import java.util.UUID
  * @version 1.0
  */
 class AccountRepository {
-    suspend fun create(account: Account): Account? = dbQuery {
+    suspend fun create(user: UUID, account: Account): Account? = dbQuery {
         val inserted = Accounts.insert {
             it[id] = UUID.randomUUID()
-            it[userId] = account.userId
+            it[userId] = user
             it[name] = account.name
             it[balance] = account.balance
             it[type] = account.type

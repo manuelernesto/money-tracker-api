@@ -2,10 +2,8 @@ package dev.manuelernesto.model.request
 
 import dev.manuelernesto.model.enums.AccountType
 import dev.manuelernesto.util.BigDecimalSerializer
-import dev.manuelernesto.util.UUIDSerializer
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
-import java.util.UUID
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -15,7 +13,6 @@ import java.util.UUID
 
 @Serializable
 data class AccountRequest(
-    @Serializable(with = UUIDSerializer::class)var userId: UUID,
     val name: String,
     @Serializable(with = BigDecimalSerializer::class) val balance: BigDecimal = BigDecimal.ZERO,
     val type: AccountType = AccountType.CURRENT,
