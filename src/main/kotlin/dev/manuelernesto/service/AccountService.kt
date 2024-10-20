@@ -17,8 +17,12 @@ class AccountService(private val accountRepository: AccountRepository, private v
 
     suspend fun createAccount(userId: UUID, account: AccountRequest): Account? {
         userRepository.getUserById(userId) ?: throw UserNotExistsException("User with ID $userId does not exist!")
-        return accountRepository.create(userId, account.toAccount())
+        return accountRepository.createAccount(userId, account.toAccount())
     }
 
+    suspend fun getUserAccounts(userId: UUID): List<Account> {
+        userRepository.getUserById(userId) ?: throw UserNotExistsException("User with ID $userId does not exist!")
+        return accountRepository.getAccountsByUserId(userId)
+    }
 
 }

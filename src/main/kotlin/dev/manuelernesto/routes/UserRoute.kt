@@ -57,7 +57,8 @@ fun Route.userRoute(userService: UserService, accountService: AccountService) {
         }
 
         get("/{id}/accounts") {
-            //TODO  get account by userID
+            val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+            call.respond(status = HttpStatusCode.OK, accountService.getUserAccounts(UUID.fromString(id)) as Any)
         }
     }
 }
