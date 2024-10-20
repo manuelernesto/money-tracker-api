@@ -22,7 +22,7 @@ class AccountRepository {
             it[institution] = account.institution
             it[description] = account.description
             it[isClosed] = account.isClosed
-            it[createdAt] = account.createdAt
+            it[createdAt] = account.createdAt!!
             it[updatedAt] = account.updatedAt
 
         }

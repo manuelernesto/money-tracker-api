@@ -4,10 +4,12 @@ import dev.manuelernesto.model.enums.AccountType
 import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.util.BigDecimalSerializer
 import dev.manuelernesto.util.UUIDSerializer
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.ResultRow
 import java.math.BigDecimal
 import java.time.Instant
+import java.time.LocalDateTime
 import java.util.UUID
 
 /**
@@ -20,13 +22,13 @@ data class Account(
     @Serializable(with = UUIDSerializer::class) val accountId: UUID? = null,
     @Serializable(with = UUIDSerializer::class) var userId: UUID,
     val name: String,
-    @Serializable(with = BigDecimalSerializer::class)  val balance: BigDecimal = BigDecimal.ZERO,
+    @Serializable(with = BigDecimalSerializer::class) val balance: BigDecimal = BigDecimal.ZERO,
     val type: AccountType = AccountType.CURRENT,
     val institution: String? = null,
     val description: String? = null,
     val isClosed: Boolean = false,
-    val createdAt: Instant? = Instant.now(),
-    val updatedAt: Instant? = null,
+    @Contextual val createdAt: LocalDateTime? = LocalDateTime.now(),
+    @Contextual val updatedAt: LocalDateTime? = null,
 ) {
 
     companion object {

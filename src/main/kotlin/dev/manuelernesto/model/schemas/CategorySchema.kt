@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.Table
  */
 object Categories : Table("transactioncategory") {
     val id = uuid("id")
-    val name = varchar("password", 255)
+    val name = varchar("name", 255).uniqueIndex()
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }
