@@ -1,6 +1,7 @@
 package dev.manuelernesto.model
 
 import dev.manuelernesto.model.enums.AccountType
+import dev.manuelernesto.model.enums.Currency
 import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.util.serializer.BigDecimalSerializer
 import dev.manuelernesto.util.serializer.LocalDateTimeSerializer
@@ -23,6 +24,7 @@ data class Account(
     val name: String,
     @Serializable(with = BigDecimalSerializer::class) val balance: BigDecimal = BigDecimal.ZERO,
     val type: AccountType = AccountType.CURRENT,
+    val currency: Currency,
     val institution: String? = null,
     val description: String? = null,
     val isClosed: Boolean = false,
@@ -37,6 +39,7 @@ data class Account(
             name = row[Accounts.name],
             balance = row[Accounts.balance],
             type = row[Accounts.type],
+            currency = row[Accounts.currency],
             institution = row[Accounts.institution],
             description = row[Accounts.description],
             isClosed = row[Accounts.isClosed],

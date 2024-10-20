@@ -18,6 +18,7 @@ fun AccountRequest.toAccount() = Account(
     name = this.name,
     balance = this.balance,
     type = this.type,
+    currency = this.currency,
     description = this.description,
     institution = this.institution
 )

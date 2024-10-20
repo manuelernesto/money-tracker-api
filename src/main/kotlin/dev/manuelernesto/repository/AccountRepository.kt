@@ -19,6 +19,7 @@ class AccountRepository {
             it[name] = account.name
             it[balance] = account.balance
             it[type] = account.type
+            it[currency] = account.currency
             it[institution] = account.institution
             it[description] = account.description
             it[isClosed] = account.isClosed

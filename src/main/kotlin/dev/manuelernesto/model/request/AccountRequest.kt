@@ -1,6 +1,7 @@
 package dev.manuelernesto.model.request
 
 import dev.manuelernesto.model.enums.AccountType
+import dev.manuelernesto.model.enums.Currency
 import dev.manuelernesto.util.serializer.BigDecimalSerializer
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
@@ -16,6 +17,7 @@ data class AccountRequest(
     val name: String,
     @Serializable(with = BigDecimalSerializer::class) val balance: BigDecimal = BigDecimal.ZERO,
     val type: AccountType = AccountType.CURRENT,
+    val currency: Currency,
     val institution: String? = null,
-    val description: String? = null
+    val description: String? = null,
 )

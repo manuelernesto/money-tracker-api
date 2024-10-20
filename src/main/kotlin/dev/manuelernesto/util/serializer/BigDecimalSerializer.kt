@@ -18,10 +18,10 @@ import java.math.BigDecimal
 object BigDecimalSerializer : KSerializer<BigDecimal> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("BigDecimal", PrimitiveKind.DOUBLE)
     override fun deserialize(decoder: Decoder): BigDecimal {
-        return BigDecimal(decoder.decodeString())
+        return BigDecimal(decoder.decodeDouble())
     }
 
     override fun serialize(encoder: Encoder, value: BigDecimal) {
-        encoder.encodeString(value.toString())
+        encoder.encodeDouble(value.toDouble())
     }
 }

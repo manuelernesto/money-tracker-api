@@ -64,8 +64,9 @@ Content-Type: application/json
 
 {
   "name": "Investment Account",
-  "balance": "15000.0",
+  "balance": 100.74,
   "description": "My personal account from SBA",
   "institution": "SBA",
-  "type": "INVESTMENT"
+  "type": "INVESTMENT",
+  "currency": "EUR"
 }
