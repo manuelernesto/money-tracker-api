@@ -2,7 +2,7 @@ package dev.manuelernesto.service
 
 import dev.manuelernesto.exceptions.UserAlreadyExistsException
 import dev.manuelernesto.exceptions.UserCredentialException
-import dev.manuelernesto.exceptions.UserNotExistsException
+import dev.manuelernesto.exceptions.NotExistsException
 import dev.manuelernesto.model.PasswordUpdate
 import dev.manuelernesto.model.User
 import dev.manuelernesto.repository.UserRepository
@@ -17,15 +17,15 @@ import java.util.UUID
 class UserService(private val userRepository: UserRepository) {
 
     suspend fun getUserById(userId: UUID): User? =
-        userRepository.getUserById(userId) ?: throw UserNotExistsException("User with ID $userId does not exist!")
+        userRepository.getUserById(userId) ?: throw NotExistsException("User with ID $userId does not exist!")
 
 
     suspend fun updatePassword(userId: UUID, passwordUpdate: PasswordUpdate) {
         val user =
-            userRepository.getUserById(userId) ?: throw UserNotExistsException("User with ID $userId does not exist!")
+            userRepository.getUserById(userId) ?: throw NotExistsException("User with ID $userId does not exist!")
 
         if (!BCrypt.checkpw(passwordUpdate.oldPassword, user.password)) {
-            throw UserNotExistsException("Incorrect current password.")
+            throw NotExistsException("Incorrect current password.")
         }
 
         if (!isValidPassword(passwordUpdate.newPassword)) {
@@ -62,7 +62,7 @@ class UserService(private val userRepository: UserRepository) {
         val user = userRepository.delete(userId)
 
         if (user <= 0) {
-            throw UserNotExistsException("User with ID $userId does not exist!")
+            throw NotExistsException("User with ID $userId does not exist!")
         }
     }
 

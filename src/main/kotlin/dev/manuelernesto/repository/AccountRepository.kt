@@ -37,4 +37,8 @@ class AccountRepository {
             Account.fromResultRow(it)
         }
     }
+
+    suspend fun getAccountById(accountId: UUID): Account? = dbQuery {
+        Accounts.selectAll().where { Accounts.id eq accountId }.singleOrNull()?.let { Account.fromResultRow(it) }
+    }
 }

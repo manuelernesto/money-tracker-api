@@ -31,12 +31,12 @@ fun StatusPagesConfig.statusPageErrorConfig() {
         call.respond(HttpStatusCode.BadRequest, errorResponse)
     }
 
-    exception<UserNotExistsException> { call, cause ->
+    exception<NotExistsException> { call, cause ->
         val errorResponse = ErrorResponse(
-            status = HttpStatusCode.BadRequest.value,
+            status = HttpStatusCode.NotFound.value,
             message = cause.message.toString()
         )
-        call.respond(HttpStatusCode.BadRequest, errorResponse)
+        call.respond(HttpStatusCode.NotFound, errorResponse)
     }
 
     exception<CategoryAlreadyExistsException> { call, cause ->
@@ -49,9 +49,9 @@ fun StatusPagesConfig.statusPageErrorConfig() {
 
     exception<CategoryNotExistsException> { call, cause ->
         val errorResponse = ErrorResponse(
-            status = HttpStatusCode.BadRequest.value,
+            status = HttpStatusCode.NotFound.value,
             message = cause.message.toString()
         )
-        call.respond(HttpStatusCode.BadRequest, errorResponse)
+        call.respond(HttpStatusCode.NotFound, errorResponse)
     }
 }
