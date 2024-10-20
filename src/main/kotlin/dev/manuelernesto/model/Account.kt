@@ -2,9 +2,9 @@ package dev.manuelernesto.model
 
 import dev.manuelernesto.model.enums.AccountType
 import dev.manuelernesto.model.schemas.Accounts
-import dev.manuelernesto.util.BigDecimalSerializer
-import dev.manuelernesto.util.UUIDSerializer
-import kotlinx.serialization.Contextual
+import dev.manuelernesto.util.serializer.BigDecimalSerializer
+import dev.manuelernesto.util.serializer.LocalDateTimeSerializer
+import dev.manuelernesto.util.serializer.UUIDSerializer
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.ResultRow
 import java.math.BigDecimal
@@ -26,8 +26,8 @@ data class Account(
     val institution: String? = null,
     val description: String? = null,
     val isClosed: Boolean = false,
-    @Contextual val createdAt: LocalDateTime? = LocalDateTime.now(),
-    @Contextual val updatedAt: LocalDateTime? = null,
+    @Serializable(with = LocalDateTimeSerializer::class) val createdAt: LocalDateTime? = LocalDateTime.now(),
+    @Serializable(with = LocalDateTimeSerializer::class) val updatedAt: LocalDateTime? = null,
 ) {
 
     companion object {

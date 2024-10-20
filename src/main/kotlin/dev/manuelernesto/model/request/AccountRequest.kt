@@ -1,7 +1,7 @@
 package dev.manuelernesto.model.request
 
 import dev.manuelernesto.model.enums.AccountType
-import dev.manuelernesto.util.BigDecimalSerializer
+import dev.manuelernesto.util.serializer.BigDecimalSerializer
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
