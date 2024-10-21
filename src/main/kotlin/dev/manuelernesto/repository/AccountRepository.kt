@@ -4,8 +4,10 @@ import dev.manuelernesto.config.dbQuery
 import dev.manuelernesto.model.Account
 import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.model.schemas.Users
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.util.UUID
 
 /**
@@ -40,5 +42,9 @@ class AccountRepository {
 
     suspend fun getAccountById(accountId: UUID): Account? = dbQuery {
         Accounts.selectAll().where { Accounts.id eq accountId }.singleOrNull()?.let { Account.fromResultRow(it) }
+    }
+
+    suspend fun deleteAccount(accountId: UUID) = dbQuery {
+        Accounts.deleteWhere() { id eq accountId }
     }
 }

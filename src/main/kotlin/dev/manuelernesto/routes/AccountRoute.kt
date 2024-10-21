@@ -4,6 +4,7 @@ import dev.manuelernesto.service.AccountService
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.delete
 import io.ktor.server.routing.get
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
@@ -27,7 +28,7 @@ fun Route.accountRoute(accountService: AccountService) {
 
         }
 
-        put("/{id}") {
+        delete("/{id}") {
 
         }
     }

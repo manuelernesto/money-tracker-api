@@ -29,4 +29,14 @@ class AccountService(private val accountRepository: AccountRepository, private v
         return accountRepository.getAccountById(accountId)
             ?: throw NotExistsException("Account with ID $accountId does not exist!")
     }
+
+    suspend fun deleteAccount(accountId: UUID) {
+        val account = accountRepository.deleteAccount(accountId)
+
+        if (account <= 0) {
+            throw NotExistsException("Account with ID $accountId does not exist!")
+        }
+    }
+
+
 }
