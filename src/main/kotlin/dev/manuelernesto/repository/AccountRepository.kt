@@ -4,10 +4,12 @@ import dev.manuelernesto.config.dbQuery
 import dev.manuelernesto.model.Account
 import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.model.schemas.Users
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.update
+import java.time.LocalDateTime
 import java.util.UUID
 
 /**
@@ -47,4 +49,16 @@ class AccountRepository {
     suspend fun deleteAccount(accountId: UUID) = dbQuery {
         Accounts.deleteWhere() { id eq accountId }
     }
+
+    suspend fun updateAccountDetails(accountId: UUID, account: Account) = dbQuery {
+        Accounts.update({ Accounts.id eq accountId }) {
+            it[name] = account.name
+            it[type] = account.type
+            it[currency] = account.currency
+            it[institution] = account.institution
+            it[description] = account.description
+            it[updatedAt] = LocalDateTime.now()
+        }
+    }
+
 }
