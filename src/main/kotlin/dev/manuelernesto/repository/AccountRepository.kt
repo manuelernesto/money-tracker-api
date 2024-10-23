@@ -8,6 +8,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 import java.util.UUID
@@ -50,7 +51,7 @@ class AccountRepository {
         Accounts.deleteWhere() { id eq accountId }
     }
 
-    suspend fun updateAccountDetails(accountId: UUID, account: Account) = dbQuery {
+    suspend fun updateAccountDetails(accountId: UUID, account: Account) = transaction{
         Accounts.update({ Accounts.id eq accountId }) {
             it[name] = account.name
             it[type] = account.type

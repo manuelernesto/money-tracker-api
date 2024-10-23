@@ -38,5 +38,8 @@ class AccountService(private val accountRepository: AccountRepository, private v
         }
     }
 
+    suspend fun updateAccount(accountId: UUID, account: Account) {
+
+    }
 
 }
