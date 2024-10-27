@@ -56,8 +56,10 @@ class AccountRepository {
         Accounts.deleteWhere() { id eq accountId }
     }
 
-    suspend fun updateAccountDetails(accountId: UUID, account: AccountUpdateRequest): Account? = dbQuery {
-        val existingAccount = getAccountById(accountId) ?: return@dbQuery null
+    fun updateAccountDetails(accountId: UUID, account: AccountUpdateRequest): Account? = transaction {
+        val existingAccount =
+            Accounts.selectAll().where { Accounts.id eq accountId }.singleOrNull()?.let { Account.fromResultRow(it) }
+                ?: return@transaction null
 
         val account = Accounts.update({ Accounts.id eq accountId }) {
             it[name] = account.name.takeIf { !it.isNullOrBlank() } ?: existingAccount.name
@@ -69,7 +71,7 @@ class AccountRepository {
         }
 
         if (account > 0) {
-            getAccountById(accountId)
+            Accounts.selectAll().where { Accounts.id eq accountId }.singleOrNull()?.let { Account.fromResultRow(it) }
         } else
             null
     }

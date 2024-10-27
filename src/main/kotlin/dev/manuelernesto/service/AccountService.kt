@@ -46,8 +46,9 @@ class AccountService(private val accountRepository: AccountRepository, private v
         accountRepository.deleteAccount(accountId)
     }
 
-    suspend fun updateAccount(accountId: UUID, account: AccountUpdateRequest): Account? {
-        return accountRepository.updateAccountDetails(accountId, account)?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
+    fun updateAccount(accountId: UUID, account: AccountUpdateRequest): Account? {
+        return accountRepository.updateAccountDetails(accountId, account)
+            ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
     }
 
 }
