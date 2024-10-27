@@ -1,7 +1,11 @@
 package dev.manuelernesto.routes
 
+import dev.manuelernesto.model.Account
+import dev.manuelernesto.model.request.AccountRequest
+import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.service.AccountService
 import io.ktor.http.HttpStatusCode
+import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.delete
@@ -25,7 +29,9 @@ fun Route.accountRoute(accountService: AccountService) {
         }
 
         put("/{id}") {
-
+            val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
+            val account = call.receive<AccountUpdateRequest>()
+            call.respond(HttpStatusCode.OK, accountService.updateAccount(UUID.fromString(id), account) as Any)
         }
 
         delete("/{id}") {
