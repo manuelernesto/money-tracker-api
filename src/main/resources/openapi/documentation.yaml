@@ -4,7 +4,7 @@ info:
   description: "money_tracker_api API"
   version: "1.0.0"
 servers:
-- url: "http://0.0.0.0:8080"
+- url: "https://money_tracker_api"
 paths:
   /api/v1/accounts/{id}:
     delete:
@@ -100,6 +100,40 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/accounts/{id}/close:
+    post:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Conflict"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /api/v1/categories:
     get:
       description: ""
