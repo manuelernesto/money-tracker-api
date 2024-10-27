@@ -4,7 +4,6 @@ import dev.manuelernesto.config.dbQuery
 import dev.manuelernesto.model.Account
 import dev.manuelernesto.model.enums.AccountType
 import dev.manuelernesto.model.enums.Currency
-import dev.manuelernesto.model.request.AccountRequest
 import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.model.schemas.Users
@@ -13,7 +12,6 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.transactions.transactionScope
 import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 import java.util.UUID
