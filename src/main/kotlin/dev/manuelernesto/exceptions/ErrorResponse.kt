@@ -74,4 +74,12 @@ fun StatusPagesConfig.statusPageErrorConfig() {
         )
         call.respond(HttpStatusCode.Conflict, errorResponse)
     }
+
+    exception<AccountIsCloseException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.Conflict.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.Conflict, errorResponse)
+    }
 }

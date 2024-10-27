@@ -60,7 +60,7 @@ class AccountRepository {
             Accounts.selectAll().where { Accounts.id eq accountId }.singleOrNull()?.let { Account.fromResultRow(it) }
                 ?: return@transaction null
 
-        val account = Accounts.update({ Accounts.id eq accountId}) {
+        val account = Accounts.update({ Accounts.id eq accountId }) {
             it[name] = account.name.takeIf { !it.isNullOrBlank() } ?: existingAccount.name
             it[type] = account.type.takeIf { it != AccountType.CURRENT } ?: existingAccount.type
             it[currency] = account.currency.takeIf { it != Currency.USD } ?: existingAccount.currency
@@ -71,12 +71,13 @@ class AccountRepository {
 
         if (account > 0) {
             Accounts.selectAll().where { Accounts.id eq accountId }.singleOrNull()?.let { Account.fromResultRow(it) }
-        } else
-            null
+        } else null
     }
 
-    suspend fun closeAccount(accountId: UUID) = dbQuery {
-        //TODO update closed account to true
+    suspend fun closeAccount(accountId: UUID): Boolean = dbQuery {
+        Accounts.update({ Accounts.id eq accountId }) {
+            it[isClosed] = true
+        } > 0
     }
 
     suspend fun increaseAndDecreaseBalance(accountId: UUID, balance: BigDecimal) = dbQuery {

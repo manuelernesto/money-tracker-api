@@ -8,6 +8,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.delete
 import io.ktor.server.routing.get
+import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
 import java.util.UUID
@@ -36,6 +37,12 @@ fun Route.accountRoute(accountService: AccountService) {
             val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
             accountService.deleteAccount(UUID.fromString(id)!!)
             call.respond(HttpStatusCode.NoContent)
+        }
+
+        post("/{id}/close") {
+            val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+            accountService.closeAccount(UUID.fromString(id)!!)
+            call.respond(HttpStatusCode.OK)
         }
     }
 }

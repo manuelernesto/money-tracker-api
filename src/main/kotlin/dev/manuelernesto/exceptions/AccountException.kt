@@ -9,3 +9,4 @@ package dev.manuelernesto.exceptions
 
 class AccountBalanceNotEmptyException(message: String) : Exception(message)
 class AccountNotFoundException(message: String) : Exception(message)
+class AccountIsCloseException(message: String) : Exception(message)

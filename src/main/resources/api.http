@@ -76,7 +76,7 @@ GET http://0.0.0.0:8080/api/v1/users/9d3f6ba7-3fad-432d-92c1-d77312bd9cf6/accoun
 Content-Type: application/json
 
 ###
-GET http://0.0.0.0:8080/api/v1/accounts/c1ed931a-8cb7-45a4-8d43-0711714824c8
+GET http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-b05638b90fdd
 Content-Type: application/json
 
 ###
@@ -90,4 +90,9 @@ Content-Type: application/json
 {
   "currency": "AOA"
 }
+
+### CLOSE ACCOUNT
+POST http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-b05638b90fdd/close
+Content-Type: application/json
+
 

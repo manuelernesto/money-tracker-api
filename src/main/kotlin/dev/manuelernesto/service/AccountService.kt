@@ -1,6 +1,7 @@
 package dev.manuelernesto.service
 
 import dev.manuelernesto.exceptions.AccountBalanceNotEmptyException
+import dev.manuelernesto.exceptions.AccountIsCloseException
 import dev.manuelernesto.exceptions.AccountNotFoundException
 import dev.manuelernesto.exceptions.UserNotFoundException
 import dev.manuelernesto.model.Account
@@ -49,6 +50,21 @@ class AccountService(private val accountRepository: AccountRepository, private v
     fun updateAccount(accountId: UUID, account: AccountUpdateRequest): Account? {
         return accountRepository.updateAccountDetails(accountId, account)
             ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
+    }
+
+    suspend fun closeAccount(accountId: UUID) {
+        val account = accountRepository.getAccountById(accountId)
+            ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
+
+        if (account.balance.compareTo(BigDecimal.ZERO) != 0) {
+            throw AccountBalanceNotEmptyException("Account with non-zero balance can not be close.")
+        }
+
+        if (account.isClosed) {
+            throw AccountIsCloseException("Account with ID $accountId is already closed!")
+        }
+
+        accountRepository.closeAccount(accountId)
     }
 
 }
