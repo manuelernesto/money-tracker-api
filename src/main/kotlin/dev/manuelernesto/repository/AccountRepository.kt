@@ -13,6 +13,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
+import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -59,7 +60,7 @@ class AccountRepository {
             Accounts.selectAll().where { Accounts.id eq accountId }.singleOrNull()?.let { Account.fromResultRow(it) }
                 ?: return@transaction null
 
-        val account = Accounts.update({ Accounts.id eq accountId }) {
+        val account = Accounts.update({ Accounts.id eq accountId}) {
             it[name] = account.name.takeIf { !it.isNullOrBlank() } ?: existingAccount.name
             it[type] = account.type.takeIf { it != AccountType.CURRENT } ?: existingAccount.type
             it[currency] = account.currency.takeIf { it != Currency.USD } ?: existingAccount.currency
@@ -73,5 +74,14 @@ class AccountRepository {
         } else
             null
     }
+
+    suspend fun closeAccount(accountId: UUID) = dbQuery {
+        //TODO update closed account to true
+    }
+
+    suspend fun increaseAndDecreaseBalance(accountId: UUID, balance: BigDecimal) = dbQuery {
+        //TODO
+    }
+
 
 }
