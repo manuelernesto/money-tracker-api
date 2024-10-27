@@ -15,6 +15,7 @@ data class ErrorResponse(val status: Int, val message: String)
 
 fun StatusPagesConfig.statusPageErrorConfig() {
 
+    //User Exceptions
     exception<UserAlreadyExistsException> { call, cause ->
         val errorResponse = ErrorResponse(
             status = HttpStatusCode.BadRequest.value,
@@ -31,7 +32,7 @@ fun StatusPagesConfig.statusPageErrorConfig() {
         call.respond(HttpStatusCode.BadRequest, errorResponse)
     }
 
-    exception<NotExistsException> { call, cause ->
+    exception<UserNotFoundException> { call, cause ->
         val errorResponse = ErrorResponse(
             status = HttpStatusCode.NotFound.value,
             message = cause.message.toString()
@@ -39,6 +40,8 @@ fun StatusPagesConfig.statusPageErrorConfig() {
         call.respond(HttpStatusCode.NotFound, errorResponse)
     }
 
+
+    //Category Exceptions
     exception<CategoryAlreadyExistsException> { call, cause ->
         val errorResponse = ErrorResponse(
             status = HttpStatusCode.BadRequest.value,
@@ -53,5 +56,22 @@ fun StatusPagesConfig.statusPageErrorConfig() {
             message = cause.message.toString()
         )
         call.respond(HttpStatusCode.NotFound, errorResponse)
+    }
+
+    //Account Exceptions
+    exception<AccountNotFoundException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.NotFound.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.NotFound, errorResponse)
+    }
+
+    exception<AccountBalanceNotEmptyException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.Conflict.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.Conflict, errorResponse)
     }
 }

@@ -1,6 +1,8 @@
 package dev.manuelernesto.service
 
-import dev.manuelernesto.exceptions.NotExistsException
+import dev.manuelernesto.exceptions.AccountBalanceNotEmptyException
+import dev.manuelernesto.exceptions.AccountNotFoundException
+import dev.manuelernesto.exceptions.UserNotFoundException
 import dev.manuelernesto.model.Account
 import dev.manuelernesto.model.request.AccountRequest
 import dev.manuelernesto.repository.AccountRepository
@@ -17,33 +19,30 @@ import java.util.UUID
 class AccountService(private val accountRepository: AccountRepository, private val userRepository: UserRepository) {
 
     suspend fun createAccount(userId: UUID, account: AccountRequest): Account? {
-        userRepository.getUserById(userId) ?: throw NotExistsException("User with ID $userId does not exist!")
+        userRepository.getUserById(userId) ?: throw UserNotFoundException("User with ID $userId does not exist!")
         return accountRepository.createAccount(userId, account.toAccount())
     }
 
     suspend fun getUserAccounts(userId: UUID): List<Account> {
-        userRepository.getUserById(userId) ?: throw NotExistsException("User with ID $userId does not exist!")
+        userRepository.getUserById(userId) ?: throw UserNotFoundException("User with ID $userId does not exist!")
         return accountRepository.getAccountsByUserId(userId)
     }
 
     suspend fun getAccount(accountId: UUID): Account? {
         return accountRepository.getAccountById(accountId)
-            ?: throw NotExistsException("Account with ID $accountId does not exist!")
+            ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
     }
 
     suspend fun deleteAccount(accountId: UUID) {
         //TODO validate if this account is pending transaction
 
-        //TODO validate if the account is balance
         val account = accountRepository.getAccountById(accountId)
-        if (account != null) {
-            if (account.balance > BigDecimal.ZERO) {
-                //TODO throw valid balance account can not be deleted
-            }
-            accountRepository.deleteAccount(accountId)
-        } else
-            throw NotExistsException("Account with ID $accountId does not exist!")
+            ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
 
+        if (account.balance != BigDecimal.ZERO) {
+            throw AccountBalanceNotEmptyException("Cannot delete account with non-zero balance.")
+        }
+        accountRepository.deleteAccount(accountId)
     }
 
     suspend fun updateAccount(accountId: UUID, account: Account) {
