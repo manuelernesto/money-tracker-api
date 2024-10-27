@@ -5,6 +5,7 @@ import dev.manuelernesto.exceptions.AccountNotFoundException
 import dev.manuelernesto.exceptions.UserNotFoundException
 import dev.manuelernesto.model.Account
 import dev.manuelernesto.model.request.AccountRequest
+import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.repository.AccountRepository
 import dev.manuelernesto.repository.UserRepository
 import dev.manuelernesto.util.toAccount
@@ -45,8 +46,8 @@ class AccountService(private val accountRepository: AccountRepository, private v
         accountRepository.deleteAccount(accountId)
     }
 
-    suspend fun updateAccount(accountId: UUID, account: Account) {
-        //TODO
+    suspend fun updateAccount(accountId: UUID, account: AccountUpdateRequest): Account? {
+        return accountRepository.updateAccountDetails(accountId, account)?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
     }
 
 }

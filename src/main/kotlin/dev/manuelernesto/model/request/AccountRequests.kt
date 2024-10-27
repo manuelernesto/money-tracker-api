@@ -24,9 +24,9 @@ data class AccountRequest(
 
 @Serializable
 data class AccountUpdateRequest(
-    val name: String,
-    val type: AccountType = AccountType.CURRENT,
-    val currency: Currency,
+    val name: String? = null,
+    val type: AccountType? = null,
+    val currency: Currency? = null,
     val institution: String? = null,
     val description: String? = null,
 )

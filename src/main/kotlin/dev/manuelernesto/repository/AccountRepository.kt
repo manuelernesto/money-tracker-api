@@ -2,13 +2,18 @@ package dev.manuelernesto.repository
 
 import dev.manuelernesto.config.dbQuery
 import dev.manuelernesto.model.Account
+import dev.manuelernesto.model.enums.AccountType
+import dev.manuelernesto.model.enums.Currency
 import dev.manuelernesto.model.request.AccountRequest
+import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.model.schemas.Users
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.transactions.transactionScope
 import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 import java.util.UUID
@@ -51,15 +56,22 @@ class AccountRepository {
         Accounts.deleteWhere() { id eq accountId }
     }
 
-    suspend fun updateAccountDetails(accountId: UUID, account: AccountRequest) = dbQuery{
-        Accounts.update({ Accounts.id eq accountId }) {
-            it[name] = account.name
-            it[type] = account.type
-            it[currency] = account.currency
-            it[institution] = account.institution
-            it[description] = account.description
+    suspend fun updateAccountDetails(accountId: UUID, account: AccountUpdateRequest): Account? = dbQuery {
+        val existingAccount = getAccountById(accountId) ?: return@dbQuery null
+
+        val account = Accounts.update({ Accounts.id eq accountId }) {
+            it[name] = account.name.takeIf { !it.isNullOrBlank() } ?: existingAccount.name
+            it[type] = account.type.takeIf { it != AccountType.CURRENT } ?: existingAccount.type
+            it[currency] = account.currency.takeIf { it != Currency.USD } ?: existingAccount.currency
+            it[institution] = account.institution.takeIf { !it.isNullOrBlank() } ?: existingAccount.institution
+            it[description] = account.description.takeIf { !it.isNullOrBlank() } ?: existingAccount.description
             it[updatedAt] = LocalDateTime.now()
         }
+
+        if (account > 0) {
+            getAccountById(accountId)
+        } else
+            null
     }
 
 }
