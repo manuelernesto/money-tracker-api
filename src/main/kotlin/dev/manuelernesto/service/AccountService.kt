@@ -39,7 +39,7 @@ class AccountService(private val accountRepository: AccountRepository, private v
         val account = accountRepository.getAccountById(accountId)
             ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
 
-        if (account.balance != BigDecimal.ZERO) {
+        if (account.balance.toDouble() != BigDecimal.ZERO.toDouble()) {
             throw AccountBalanceNotEmptyException("Cannot delete account with non-zero balance.")
         }
         accountRepository.deleteAccount(accountId)
