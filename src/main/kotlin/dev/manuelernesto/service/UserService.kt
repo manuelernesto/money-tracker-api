@@ -59,6 +59,10 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     suspend fun deleteUserById(userId: UUID) {
+        //TODO verify if user is account with non-zero balance
+
+        //TODO verify if user is non-pending transaction
+
         val user = userRepository.delete(userId)
 
         if (user <= 0) {
