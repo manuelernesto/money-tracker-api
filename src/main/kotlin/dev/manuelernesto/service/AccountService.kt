@@ -6,6 +6,7 @@ import dev.manuelernesto.model.request.AccountRequest
 import dev.manuelernesto.repository.AccountRepository
 import dev.manuelernesto.repository.UserRepository
 import dev.manuelernesto.util.toAccount
+import java.math.BigDecimal
 import java.util.UUID
 
 /**
@@ -34,12 +35,15 @@ class AccountService(private val accountRepository: AccountRepository, private v
         //TODO validate if this account is pending transaction
 
         //TODO validate if the account is balance
-
-        val account = accountRepository.deleteAccount(accountId)
-
-        if (account <= 0) {
+        val account = accountRepository.getAccountById(accountId)
+        if (account != null) {
+            if (account.balance > BigDecimal.ZERO) {
+                //TODO throw valid balance account can not be deleted
+            }
+            accountRepository.deleteAccount(accountId)
+        } else
             throw NotExistsException("Account with ID $accountId does not exist!")
-        }
+
     }
 
     suspend fun updateAccount(accountId: UUID, account: Account) {
