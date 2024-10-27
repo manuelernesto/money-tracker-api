@@ -31,6 +31,10 @@ class AccountService(private val accountRepository: AccountRepository, private v
     }
 
     suspend fun deleteAccount(accountId: UUID) {
+        //TODO validate if this account is pending transaction
+
+        //TODO validate if the account is balance
+
         val account = accountRepository.deleteAccount(accountId)
 
         if (account <= 0) {
@@ -39,7 +43,7 @@ class AccountService(private val accountRepository: AccountRepository, private v
     }
 
     suspend fun updateAccount(accountId: UUID, account: Account) {
-
+        //TODO
     }
 
 }

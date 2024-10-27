@@ -29,7 +29,9 @@ fun Route.accountRoute(accountService: AccountService) {
         }
 
         delete("/{id}") {
-
+            val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
+            accountService.deleteAccount(UUID.fromString(id)!!)
+            call.respond(HttpStatusCode.NoContent)
         }
     }
 }

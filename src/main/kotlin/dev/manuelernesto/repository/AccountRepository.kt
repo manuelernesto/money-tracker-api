@@ -2,13 +2,13 @@ package dev.manuelernesto.repository
 
 import dev.manuelernesto.config.dbQuery
 import dev.manuelernesto.model.Account
+import dev.manuelernesto.model.request.AccountRequest
 import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.model.schemas.Users
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 import java.util.UUID
@@ -51,7 +51,7 @@ class AccountRepository {
         Accounts.deleteWhere() { id eq accountId }
     }
 
-    suspend fun updateAccountDetails(accountId: UUID, account: Account) = transaction{
+    suspend fun updateAccountDetails(accountId: UUID, account: AccountRequest) = dbQuery{
         Accounts.update({ Accounts.id eq accountId }) {
             it[name] = account.name
             it[type] = account.type
