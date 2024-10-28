@@ -7,6 +7,7 @@ import dev.manuelernesto.model.enums.Currency
 import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.model.schemas.Users
+import org.jetbrains.exposed.sql.SqlExpressionBuilder
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
@@ -80,8 +81,20 @@ class AccountRepository {
         } > 0
     }
 
-    suspend fun increaseAndDecreaseBalance(accountId: UUID, balance: BigDecimal) = dbQuery {
-        //TODO
+    fun withdrawMoneyToAccount(accountId: UUID, amount: BigDecimal) = transaction {
+        Accounts.update({ Accounts.id eq accountId }) {
+            with(SqlExpressionBuilder) {
+                it.update(Accounts.balance, Accounts.balance - amount)
+            }
+        }
+    }
+
+    fun addMoneyToAccount(accountId: UUID, amount: BigDecimal) = transaction {
+        Accounts.update({ Accounts.id eq accountId }) {
+            with(SqlExpressionBuilder) {
+                it.update(Accounts.balance, Accounts.balance + amount)
+            }
+        }
     }
 
 
