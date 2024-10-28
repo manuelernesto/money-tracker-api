@@ -67,4 +67,19 @@ class AccountService(private val accountRepository: AccountRepository, private v
         accountRepository.closeAccount(accountId)
     }
 
+    suspend fun withdrawMoneyToAccount(accountId: UUID, amount: BigDecimal) {
+        val account = accountRepository.getAccountById(accountId)
+            ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
+
+        if (amount < BigDecimal.ZERO) {
+            throw NegativeAmountException()
+        }
+
+        if (account.balance <= amount) {
+            throw NoEnouthMoneyInAccountException()
+        }
+
+        accountRepository.withdrawMoneyToAccount(accountId, amount)
+    }
+
 }
