@@ -53,7 +53,7 @@ class AccountRepository {
     }
 
     suspend fun deleteAccount(accountId: UUID) = dbQuery {
-        Accounts.deleteWhere() { id eq accountId }
+        Accounts.deleteWhere { id eq accountId }
     }
 
     fun updateAccountDetails(accountId: UUID, account: AccountUpdateRequest): Account? = transaction {
@@ -84,7 +84,7 @@ class AccountRepository {
     fun withdrawMoneyToAccount(accountId: UUID, amount: BigDecimal) = transaction {
         Accounts.update({ Accounts.id eq accountId }) {
             with(SqlExpressionBuilder) {
-                it.update(Accounts.balance, Accounts.balance - amount)
+                it.update(balance, balance - amount)
             }
         }
     }
@@ -92,7 +92,7 @@ class AccountRepository {
     fun addMoneyToAccount(accountId: UUID, amount: BigDecimal) = transaction {
         Accounts.update({ Accounts.id eq accountId }) {
             with(SqlExpressionBuilder) {
-                it.update(Accounts.balance, Accounts.balance + amount)
+                it.update(balance, balance + amount)
             }
         }
     }

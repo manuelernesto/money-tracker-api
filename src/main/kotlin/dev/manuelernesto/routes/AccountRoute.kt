@@ -49,19 +49,18 @@ fun Route.accountRoute(accountService: AccountService) {
         put("/{id}/deposit") {
             val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
             val balance = call.receive<AccountBalanceRequest>()
-            call.respond(
-                HttpStatusCode.OK,
-                accountService.addMoneyToAccount(UUID.fromString(id), balance.balance) as Any
-            )
+
+            accountService.addMoneyToAccount(UUID.fromString(id), balance.balance)
+            call.respond(HttpStatusCode.OK)
         }
 
         put("/{id}/withdraw") {
             val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
             val balance = call.receive<AccountBalanceRequest>()
-            call.respond(
-                HttpStatusCode.OK,
-                accountService.withdrawMoneyToAccount(UUID.fromString(id), balance.balance) as Any
-            )
+
+            accountService.withdrawMoneyToAccount(UUID.fromString(id), balance.balance)
+
+            call.respond(HttpStatusCode.OK)
         }
 
     }
