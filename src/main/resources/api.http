@@ -95,4 +95,20 @@ Content-Type: application/json
 POST http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-b05638b90fdd/close
 Content-Type: application/json
 
+###
+PUT http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-b05638b90fdd/deposit
+Content-Type: application/json
+
+{
+  "balance": "1000"
+}
+
+###
+PUT http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-b05638b90fdd/withdraw
+Content-Type: application/json
+
+{
+  "balance": 1.00
+}
+
 
