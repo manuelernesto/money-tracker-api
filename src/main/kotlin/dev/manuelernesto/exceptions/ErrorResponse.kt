@@ -82,4 +82,21 @@ fun StatusPagesConfig.statusPageErrorConfig() {
         )
         call.respond(HttpStatusCode.Conflict, errorResponse)
     }
+
+    exception<NegativeAmountException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.BadRequest.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.BadRequest, errorResponse)
+    }
+
+    exception<NoEnoughMoneyInAccountException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.BadRequest.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.BadRequest, errorResponse)
+    }
+
 }

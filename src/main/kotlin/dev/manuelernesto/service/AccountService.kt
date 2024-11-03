@@ -3,6 +3,8 @@ package dev.manuelernesto.service
 import dev.manuelernesto.exceptions.AccountBalanceNotEmptyException
 import dev.manuelernesto.exceptions.AccountIsCloseException
 import dev.manuelernesto.exceptions.AccountNotFoundException
+import dev.manuelernesto.exceptions.NegativeAmountException
+import dev.manuelernesto.exceptions.NoEnoughMoneyInAccountException
 import dev.manuelernesto.exceptions.UserNotFoundException
 import dev.manuelernesto.model.Account
 import dev.manuelernesto.model.request.AccountRequest
@@ -72,14 +74,29 @@ class AccountService(private val accountRepository: AccountRepository, private v
             ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
 
         if (amount < BigDecimal.ZERO) {
-            throw NegativeAmountException()
+            throw NegativeAmountException("Amount must be more than zero!")
         }
 
         if (account.balance <= amount) {
-            throw NoEnouthMoneyInAccountException()
+            throw NoEnoughMoneyInAccountException("No enough money in account with ID $accountId!")
         }
 
         accountRepository.withdrawMoneyToAccount(accountId, amount)
+    }
+
+    suspend fun addMoneyToAccount(accountId: UUID, amount: BigDecimal) {
+        val account = accountRepository.getAccountById(accountId)
+            ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
+
+        if (amount < BigDecimal.ZERO) {
+            throw NegativeAmountException("Amount must be more than zero!")
+        }
+
+        if (account.isClosed) {
+            throw AccountIsCloseException("Account with ID $accountId is closed!")
+        }
+
+        accountRepository.addMoneyToAccount(accountId, amount)
     }
 
 }
