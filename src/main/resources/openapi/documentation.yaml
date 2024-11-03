@@ -134,6 +134,86 @@ paths:
             '*/*':
               schema:
                 type: "object"
+  /api/v1/accounts/{id}/deposit:
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountBalanceRequest"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Conflict"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/accounts/{id}/withdraw:
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountBalanceRequest"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Conflict"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /api/v1/categories:
     get:
       description: ""
@@ -464,6 +544,16 @@ components:
           type: "string"
         description:
           type: "string"
+    BigDecimal:
+      type: "object"
+      properties: {}
+    AccountBalanceRequest:
+      type: "object"
+      properties:
+        balance:
+          $ref: "#/components/schemas/BigDecimal"
+      required:
+      - "balance"
     Category:
       type: "object"
       properties:
@@ -489,9 +579,6 @@ components:
       required:
       - "username"
       - "password"
-    BigDecimal:
-      type: "object"
-      properties: {}
     AccountRequest:
       type: "object"
       properties:
