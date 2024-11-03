@@ -30,3 +30,8 @@ data class AccountUpdateRequest(
     val institution: String? = null,
     val description: String? = null,
 )
+
+@Serializable
+data class AccountBalanceRequest(
+    @Serializable(with = BigDecimalSerializer::class) val balance: BigDecimal,
+)
