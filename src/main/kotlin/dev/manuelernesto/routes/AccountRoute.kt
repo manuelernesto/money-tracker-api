@@ -1,5 +1,6 @@
 package dev.manuelernesto.routes
 
+import dev.manuelernesto.model.request.AccountBalanceRequest
 import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.service.AccountService
 import io.ktor.http.HttpStatusCode
@@ -44,5 +45,24 @@ fun Route.accountRoute(accountService: AccountService) {
             accountService.closeAccount(UUID.fromString(id)!!)
             call.respond(HttpStatusCode.OK)
         }
+
+        put("/{id}/deposit") {
+            val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
+            val balance = call.receive<AccountBalanceRequest>()
+            call.respond(
+                HttpStatusCode.OK,
+                accountService.addMoneyToAccount(UUID.fromString(id), balance.balance) as Any
+            )
+        }
+
+        put("/{id}/withdraw") {
+            val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
+            val balance = call.receive<AccountBalanceRequest>()
+            call.respond(
+                HttpStatusCode.OK,
+                accountService.withdrawMoneyToAccount(UUID.fromString(id), balance.balance) as Any
+            )
+        }
+
     }
 }
