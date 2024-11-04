@@ -3,6 +3,7 @@ package dev.manuelernesto.routes
 import dev.manuelernesto.model.request.AccountBalanceRequest
 import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.service.AccountService
+import dev.manuelernesto.util.validateAndGet
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
@@ -50,7 +51,7 @@ fun Route.accountRoute(accountService: AccountService) {
             val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
             val balance = call.receive<AccountBalanceRequest>()
 
-            accountService.addMoneyToAccount(UUID.fromString(id), balance.balance)
+            accountService.addMoneyToAccount(id.validateAndGet(), balance.balance)
             call.respond(HttpStatusCode.OK)
         }
 

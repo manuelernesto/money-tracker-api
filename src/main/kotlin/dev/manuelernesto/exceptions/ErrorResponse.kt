@@ -4,6 +4,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.plugins.statuspages.StatusPagesConfig
 import io.ktor.server.response.respond
 import kotlinx.serialization.Serializable
+import java.lang.IllegalArgumentException
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -97,6 +98,14 @@ fun StatusPagesConfig.statusPageErrorConfig() {
             message = cause.message.toString()
         )
         call.respond(HttpStatusCode.Conflict, errorResponse)
+    }
+
+    exception<IllegalArgumentException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.BadRequest.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.BadRequest, errorResponse)
     }
 
 }
