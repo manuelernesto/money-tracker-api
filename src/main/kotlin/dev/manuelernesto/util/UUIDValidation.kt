@@ -8,10 +8,10 @@ import java.util.UUID
  * @version 1.0
  */
 
-fun String.validateAndGet(): UUID {
+fun validateUUIDAndGet(uuid: String): UUID {
     return try {
-        UUID.fromString(this.toString())
+        UUID.fromString(uuid)
     } catch (e: IllegalArgumentException) {
-        throw IllegalArgumentException("Invalid UUID format: $this")
+        throw IllegalArgumentException("Invalid UUID format: $uuid")
     }
 }

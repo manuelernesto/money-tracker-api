@@ -3,7 +3,7 @@ package dev.manuelernesto.routes
 import dev.manuelernesto.model.request.AccountBalanceRequest
 import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.service.AccountService
-import dev.manuelernesto.util.validateAndGet
+import dev.manuelernesto.util.validateUUIDAndGet
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
@@ -13,7 +13,6 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
-import java.util.UUID
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -26,24 +25,24 @@ fun Route.accountRoute(accountService: AccountService) {
 
         get("/{id}") {
             val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
-            call.respond(accountService.getAccount(UUID.fromString(id)) as Any)
+            call.respond(accountService.getAccount(validateUUIDAndGet(id)) as Any)
         }
 
         put("/{id}") {
             val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
             val account = call.receive<AccountUpdateRequest>()
-            call.respond(HttpStatusCode.OK, accountService.updateAccount(UUID.fromString(id), account) as Any)
+            call.respond(HttpStatusCode.OK, accountService.updateAccount(validateUUIDAndGet(id), account) as Any)
         }
 
         delete("/{id}") {
             val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
-            accountService.deleteAccount(UUID.fromString(id)!!)
+            accountService.deleteAccount(validateUUIDAndGet(id))
             call.respond(HttpStatusCode.NoContent)
         }
 
         post("/{id}/close") {
             val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-            accountService.closeAccount(UUID.fromString(id)!!)
+            accountService.closeAccount(validateUUIDAndGet(id))
             call.respond(HttpStatusCode.OK)
         }
 
@@ -51,7 +50,7 @@ fun Route.accountRoute(accountService: AccountService) {
             val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
             val balance = call.receive<AccountBalanceRequest>()
 
-            accountService.addMoneyToAccount(id.validateAndGet(), balance.balance)
+            accountService.addMoneyToAccount(validateUUIDAndGet(id), balance.balance)
             call.respond(HttpStatusCode.OK)
         }
 
@@ -59,7 +58,7 @@ fun Route.accountRoute(accountService: AccountService) {
             val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
             val balance = call.receive<AccountBalanceRequest>()
 
-            accountService.withdrawMoneyToAccount(UUID.fromString(id), balance.balance)
+            accountService.withdrawMoneyToAccount(validateUUIDAndGet(id), balance.balance)
 
             call.respond(HttpStatusCode.OK)
         }
