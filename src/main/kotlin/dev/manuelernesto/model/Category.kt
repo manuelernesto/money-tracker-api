@@ -1,7 +1,7 @@
 package dev.manuelernesto.model
 
 import dev.manuelernesto.model.schemas.Categories
-import dev.manuelernesto.util.UUIDSerializer
+import dev.manuelernesto.util.serializer.UUIDSerializer
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.ResultRow
 import java.util.UUID

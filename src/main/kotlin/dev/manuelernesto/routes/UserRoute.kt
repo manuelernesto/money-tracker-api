@@ -2,8 +2,11 @@ package dev.manuelernesto.routes
 
 import dev.manuelernesto.model.PasswordUpdate
 import dev.manuelernesto.model.User
+import dev.manuelernesto.model.request.AccountRequest
+import dev.manuelernesto.service.AccountService
 import dev.manuelernesto.service.UserService
 import dev.manuelernesto.util.toUserResponse
+import dev.manuelernesto.util.validateUUIDAndGet
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
@@ -13,7 +16,6 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
-import java.util.UUID
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -21,12 +23,12 @@ import java.util.UUID
  * @version 1.0
  */
 
-fun Route.userRoute(userService: UserService) {
-    route("/api/users") {
+fun Route.userRoute(userService: UserService, accountService: AccountService) {
+    route("/api/v1/users") {
 
         get("/{id}") {
             val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
-            call.respond(userService.getUserById(UUID.fromString(id))?.toUserResponse() as Any)
+            call.respond(userService.getUserById(validateUUIDAndGet(id))?.toUserResponse() as Any)
         }
         post {
             val user = call.receive<User>()
@@ -37,14 +39,26 @@ fun Route.userRoute(userService: UserService) {
         put("/{id}/new-password") {
             val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
             val password = call.receive<PasswordUpdate>()
-            userService.updatePassword(UUID.fromString(id), password)
+            userService.updatePassword(validateUUIDAndGet(id), password)
             call.respond(HttpStatusCode.OK)
         }
 
         delete("/{id}") {
             val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
-            userService.deleteUserById(UUID.fromString(id))
+            userService.deleteUserById(validateUUIDAndGet(id))
             call.respond(HttpStatusCode.NoContent)
+        }
+
+        post("/{id}/accounts") {
+            val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+            val account = call.receive<AccountRequest>()
+            val createdAccount = accountService.createAccount(validateUUIDAndGet(id), account)
+            call.respond(status = HttpStatusCode.Created, createdAccount as Any)
+        }
+
+        get("/{id}/accounts") {
+            val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+            call.respond(status = HttpStatusCode.OK, accountService.getUserAccounts(validateUUIDAndGet(id)) as Any)
         }
     }
 }

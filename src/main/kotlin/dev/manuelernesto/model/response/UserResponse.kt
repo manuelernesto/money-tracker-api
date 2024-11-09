@@ -1,6 +1,6 @@
 package dev.manuelernesto.model.response
 
-import dev.manuelernesto.util.UUIDSerializer
+import dev.manuelernesto.util.serializer.UUIDSerializer
 import kotlinx.serialization.Serializable
 import java.util.UUID
 

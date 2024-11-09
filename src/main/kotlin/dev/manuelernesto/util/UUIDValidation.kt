@@ -1,6 +1,5 @@
 package dev.manuelernesto.util
 
-import dev.manuelernesto.exceptions.InvalidUUIDException
 import java.util.UUID
 
 /**
@@ -9,11 +8,10 @@ import java.util.UUID
  * @version 1.0
  */
 
-fun UUID.isValidUUID(): Boolean {
-    try {
-        UUID.fromString(this.toString())
-        return true
-    } catch (e: InvalidUUIDException) {
-        return false
+fun validateUUIDAndGet(uuid: String): UUID {
+    return try {
+        UUID.fromString(uuid)
+    } catch (e: IllegalArgumentException) {
+        throw IllegalArgumentException("Invalid UUID format: $uuid")
     }
 }

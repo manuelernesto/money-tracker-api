@@ -1,0 +1,114 @@
+### USERS
+
+POST http://0.0.0.0:8080/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "manuelernest01",
+  "password": "A2j34567?0",
+  "email": "hi@manuelernesto.dev"
+}
+
+###
+
+PUT http://0.0.0.0:8080/api/v1/users/1/new-password
+Content-Type: application/json
+
+{
+  "oldPassword": "A2j34567?0",
+  "newPassword": "A2j34567?1"
+}
+
+
+###
+GET 0.0.0.0:8080/api/v1/users/2233bcfe-b570-423b-b51b-17363a0be578
+Content-Type: application/json
+
+###
+DELETE 0.0.0.0:8080/api/v1/users/2233bcfe-b570-423b-b51b-17363a0be57
+Content-Type: application/json
+
+
+### CATEGORIES
+GET 0.0.0.0:8080/api/v1/categories/e55f8056-55c4-4686-9c74-9f8180960ef2
+Content-Type: application/json
+
+###
+GET 0.0.0.0:8080/api/v1/categories
+Content-Type: application/json
+
+### USERS
+
+POST http://0.0.0.0:8080/api/v1/categories
+Content-Type: application/json
+
+{
+  "name": "Travel"
+}
+
+###
+DELETE 0.0.0.0:8080/api/v1/categories/e55f8056-55c4-4686-9c74-9f8180960ef2
+Content-Type: application/json
+
+###
+PUT http://0.0.0.0:8080/api/v1/categories/b8f391fa-12b4-498f-81b8-13a30ad42ff3
+Content-Type: application/json
+
+{
+  "name": "LOAN"
+}
+
+### ACCOUNTS
+POST http://0.0.0.0:8080/api/v1/users/9d3f6ba7-3fad-432d-92c1-d77312bd9cf6/accounts
+Content-Type: application/json
+
+{
+  "name": "Investment Account",
+  "balance": 100.74,
+  "description": "My personal account from SBA",
+  "institution": "SBA",
+  "type": "INVESTMENT",
+  "currency": "EUR"
+}
+
+###
+GET http://0.0.0.0:8080/api/v1/users/9d3f6ba7-3fad-432d-92c1-d77312bd9cf6/accounts
+Content-Type: application/json
+
+###
+GET http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-b05638b90fdd
+Content-Type: application/json
+
+###
+DELETE http://0.0.0.0:8080/api/v1/accounts/ff79ee53-bb8a-4016-a8df-771776be0c18
+Content-Type: application/json
+
+###
+PUT http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-b05638b90fdd
+Content-Type: application/json
+
+{
+  "currency": "AOA"
+}
+
+### CLOSE ACCOUNT
+POST http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-b05638b90fdd/close
+Content-Type: application/json
+
+###
+PUT http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-b05638b90fdd/deposit
+Content-Type: application/json
+
+{
+  "balance": "1000"
+}
+
+###
+PUT http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-/withdraw
+Content-Type: application/json
+
+{
+  "balance": 1.00
+}
+
+

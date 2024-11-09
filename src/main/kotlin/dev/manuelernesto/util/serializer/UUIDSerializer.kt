@@ -1,4 +1,4 @@
-package dev.manuelernesto.util
+package dev.manuelernesto.util.serializer
 
 
 import kotlinx.serialization.KSerializer

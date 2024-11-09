@@ -4,6 +4,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.plugins.statuspages.StatusPagesConfig
 import io.ktor.server.response.respond
 import kotlinx.serialization.Serializable
+import java.lang.IllegalArgumentException
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -15,6 +16,7 @@ data class ErrorResponse(val status: Int, val message: String)
 
 fun StatusPagesConfig.statusPageErrorConfig() {
 
+    //User Exceptions
     exception<UserAlreadyExistsException> { call, cause ->
         val errorResponse = ErrorResponse(
             status = HttpStatusCode.BadRequest.value,
@@ -31,14 +33,16 @@ fun StatusPagesConfig.statusPageErrorConfig() {
         call.respond(HttpStatusCode.BadRequest, errorResponse)
     }
 
-    exception<UserNotExistsException> { call, cause ->
+    exception<UserNotFoundException> { call, cause ->
         val errorResponse = ErrorResponse(
-            status = HttpStatusCode.BadRequest.value,
+            status = HttpStatusCode.NotFound.value,
             message = cause.message.toString()
         )
-        call.respond(HttpStatusCode.BadRequest, errorResponse)
+        call.respond(HttpStatusCode.NotFound, errorResponse)
     }
 
+
+    //Category Exceptions
     exception<CategoryAlreadyExistsException> { call, cause ->
         val errorResponse = ErrorResponse(
             status = HttpStatusCode.BadRequest.value,
@@ -49,9 +53,59 @@ fun StatusPagesConfig.statusPageErrorConfig() {
 
     exception<CategoryNotExistsException> { call, cause ->
         val errorResponse = ErrorResponse(
+            status = HttpStatusCode.NotFound.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.NotFound, errorResponse)
+    }
+
+    //Account Exceptions
+    exception<AccountNotFoundException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.NotFound.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.NotFound, errorResponse)
+    }
+
+    exception<AccountBalanceNotEmptyException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.Conflict.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.Conflict, errorResponse)
+    }
+
+    exception<AccountIsCloseException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.Conflict.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.Conflict, errorResponse)
+    }
+
+    exception<NegativeAmountException> { call, cause ->
+        val errorResponse = ErrorResponse(
             status = HttpStatusCode.BadRequest.value,
             message = cause.message.toString()
         )
         call.respond(HttpStatusCode.BadRequest, errorResponse)
     }
+
+    exception<NoEnoughMoneyInAccountException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.Conflict.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.Conflict, errorResponse)
+    }
+
+    exception<IllegalArgumentException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.BadRequest.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.BadRequest, errorResponse)
+    }
+
 }

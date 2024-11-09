@@ -6,6 +6,10 @@ This is an API developed with modern server side tools:
 * [Ktor](https://github.com/ktorio/ktor)
 * [Exposed](https://github.com/JetBrains/Exposed)
 
+### OpenAPI Documentation
+![OpenAPI Documentation](./pictures/openapi.png)
+Check [here](/src/main/resources/openapi/documentation.yaml) the documentation file.
+
 ### How to run the project
 
 * Clone the repository
@@ -23,5 +27,5 @@ CREATE DATABASE money_tracker_db;
 * Go to the project folder and run it
 
 ``` 
-DB_URL=jdbc:postgresql://localhost:5432/money_tracker_db DB_PASSWORD=your_db_password DB_USER=your_db_user ./gradlew run
+DB_URL=jdbc:postgresql://{host}:{port}/money_tracker_db DB_PASSWORD=your_db_password DB_USER=your_db_user ./gradlew run
 ``` 

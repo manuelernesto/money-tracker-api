@@ -1,10 +1,13 @@
 package dev.manuelernesto.plugins
 
 import dev.manuelernesto.exceptions.statusPageErrorConfig
+import dev.manuelernesto.repository.AccountRepository
 import dev.manuelernesto.repository.CategoryRepository
 import dev.manuelernesto.repository.UserRepository
+import dev.manuelernesto.routes.accountRoute
 import dev.manuelernesto.routes.categoryRoute
 import dev.manuelernesto.routes.userRoute
+import dev.manuelernesto.service.AccountService
 import dev.manuelernesto.service.CategoryService
 import dev.manuelernesto.service.UserService
 import io.ktor.server.application.*
@@ -22,7 +25,11 @@ fun Application.configureRouting() {
         val categoryRepository = CategoryRepository()
         val categoryService = CategoryService(categoryRepository)
 
-        userRoute(userService)
+        val accountRepository = AccountRepository()
+        val accountService = AccountService(accountRepository, userRepository)
+
+        userRoute(userService, accountService)
         categoryRoute(categoryService)
+        accountRoute(accountService)
     }
 }

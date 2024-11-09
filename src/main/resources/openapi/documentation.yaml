@@ -6,7 +6,215 @@ info:
 servers:
 - url: "https://money_tracker_api"
 paths:
-  /api/categories:
+  /api/v1/accounts/{id}:
+    delete:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Conflict"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "204":
+          description: "No Content"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountUpdateRequest"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/accounts/{id}/close:
+    post:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Conflict"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/accounts/{id}/deposit:
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountBalanceRequest"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Conflict"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/accounts/{id}/withdraw:
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountBalanceRequest"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Conflict"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/categories:
     get:
       description: ""
       responses:
@@ -37,7 +245,7 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Object"
-  /api/categories/{id}:
+  /api/v1/categories/{id}:
     delete:
       description: ""
       parameters:
@@ -53,6 +261,12 @@ paths:
             '*/*':
               schema:
                 type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "204":
           description: "No Content"
           content:
@@ -80,6 +294,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     put:
       description: ""
       parameters:
@@ -101,13 +321,19 @@ paths:
             '*/*':
               schema:
                 type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "200":
           description: "OK"
           content:
             '*/*':
               schema:
                 type: "object"
-  /api/users:
+  /api/v1/users:
     post:
       description: ""
       requestBody:
@@ -129,7 +355,7 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Object"
-  /api/users/{id}:
+  /api/v1/users/{id}:
     delete:
       description: ""
       parameters:
@@ -145,6 +371,12 @@ paths:
             '*/*':
               schema:
                 type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "204":
           description: "No Content"
           content:
@@ -172,7 +404,74 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Object"
-  /api/users/{id}/new-password:
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/users/{id}/accounts:
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountRequest"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+  /api/v1/users/{id}/new-password:
     put:
       description: ""
       parameters:
@@ -194,6 +493,12 @@ paths:
             '*/*':
               schema:
                 type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "200":
           description: "OK"
           content:
@@ -215,6 +520,40 @@ components:
     Object:
       type: "object"
       properties: {}
+    AccountUpdateRequest:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        type:
+          type: "string"
+          enum:
+          - "CURRENT"
+          - "CHECKING"
+          - "SAVING"
+          - "CREDIT_CARD"
+          - "INVESTMENT"
+          - "CASH"
+        currency:
+          type: "string"
+          enum:
+          - "AOA"
+          - "USD"
+          - "EUR"
+        institution:
+          type: "string"
+        description:
+          type: "string"
+    BigDecimal:
+      type: "object"
+      properties: {}
+    AccountBalanceRequest:
+      type: "object"
+      properties:
+        balance:
+          $ref: "#/components/schemas/BigDecimal"
+      required:
+      - "balance"
     Category:
       type: "object"
       properties:
@@ -240,6 +579,37 @@ components:
       required:
       - "username"
       - "password"
+    AccountRequest:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        balance:
+          $ref: "#/components/schemas/BigDecimal"
+        type:
+          type: "string"
+          enum:
+          - "CURRENT"
+          - "CHECKING"
+          - "SAVING"
+          - "CREDIT_CARD"
+          - "INVESTMENT"
+          - "CASH"
+        currency:
+          type: "string"
+          enum:
+          - "AOA"
+          - "USD"
+          - "EUR"
+        institution:
+          type: "string"
+        description:
+          type: "string"
+      required:
+      - "name"
+      - "balance"
+      - "type"
+      - "currency"
     PasswordUpdate:
       type: "object"
       properties:

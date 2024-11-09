@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.Table.PrimaryKey
  */
 
 object Users : Table("usermanager") {
-    val id = uuid("userId")
+    val id = uuid("id")
     val username = varchar("username", 255).uniqueIndex()
     val password = varchar("password", 255)
     val email = varchar("email", 255).nullable()
