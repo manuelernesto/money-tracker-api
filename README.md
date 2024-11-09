@@ -6,6 +6,11 @@ This is an API developed with modern server side tools:
 * [Ktor](https://github.com/ktorio/ktor)
 * [Exposed](https://github.com/JetBrains/Exposed)
 
+### OpenAPI Documentation
+
+Check [here](/src/main/resources/openapi/documentation.yaml) the documentation file
+
+
 ### How to run the project
 
 * Clone the repository
