@@ -8,8 +8,9 @@ This is an API developed with modern server side tools:
 
 ### OpenAPI Documentation
 
-Check [here](/src/main/resources/openapi/documentation.yaml) the documentation file
+<img width="800px"  src="https://imgur.com/a/8mUOSBz.png" alt="OpenAPI Documentation">
 
+Check [here](/src/main/resources/openapi/documentation.yaml) the documentation file.
 
 ### How to run the project
 
