@@ -1,4 +1,4 @@
-### Money Tracker API
+# Money Tracker API
 
 This is an API developed with modern server side tools:
 
