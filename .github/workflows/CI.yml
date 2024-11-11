@@ -20,7 +20,7 @@ jobs:
           echo "sha=$SHA" >> $GITHUB_OUTPUT
 
       - name: Build docker image
-        run: docker build -t manuelernest0/money.tracker.api:${{steps.generate_sha.outputs.sha}} .
+        run: docker build -t manuelernest0/money-tracker-api:${{steps.generate_sha.outputs.sha}} .
 
       - name: Log into container registry
         uses: docker/login-action@v3
@@ -30,6 +30,6 @@ jobs:
 
       - name: Push image
         run: |
-          docker push manuelernest0/money.tracker.api:${{steps.generate_sha.outputs.sha}}
-          docker tag manuelernest0/money.tracker.api:${{steps.generate_sha.outputs.sha}} manuelernest0/money.tracker.api:latest
-          docker push manuelernest0/money.tracker.api:latest
+          docker push manuelernest0/money-tracker-api:${{steps.generate_sha.outputs.sha}}
+          docker tag manuelernest0/money-tracker-api:${{steps.generate_sha.outputs.sha}} manuelernest0/money-tracker-api:latest
+          docker push manuelernest0/money-tracker-api:latest
