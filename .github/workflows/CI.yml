@@ -31,5 +31,5 @@ jobs:
       - name: Push image
         run: |
           docker push manuelernest0/money.tracker.api:${{steps.generate_sha.outputs.sha}}
-          docker tag manuelernest0/money.tracker.api:${{steps.generate_sha.outputs.sha}} manuelernest0/nlw.api.passin:latest
+          docker tag manuelernest0/money.tracker.api:${{steps.generate_sha.outputs.sha}} manuelernest0/money.tracker.api:latest
           docker push manuelernest0/money.tracker.api:latest
