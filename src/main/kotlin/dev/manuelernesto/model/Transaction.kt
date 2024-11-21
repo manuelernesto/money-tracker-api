@@ -24,7 +24,7 @@ data class Transaction(
     @Serializable(with = UUIDSerializer::class) var categoryId: UUID,
     val type: TransactionType,
     val note: String? = null,
-    @Serializable(with = LocalDateTimeSerializer::class) val date: LocalDateTime? = null,
+    @Serializable(with = LocalDateTimeSerializer::class) val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     companion object {
         fun fromResultRow(row: ResultRow) = Transaction(
@@ -36,6 +36,5 @@ data class Transaction(
             note = row[Transactions.note],
             date = row[Transactions.date]
         )
-
     }
 }
