@@ -5,6 +5,7 @@ import dev.manuelernesto.util.serializer.BigDecimalSerializer
 import dev.manuelernesto.util.serializer.LocalDateTimeSerializer
 import dev.manuelernesto.util.serializer.UUIDSerializer
 import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.sql.ResultRow
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
@@ -23,4 +24,11 @@ data class Transaction(
     val type: TransactionType,
     val note: String? = null,
     @Serializable(with = LocalDateTimeSerializer::class) val date: LocalDateTime? = null,
-)
+) {
+    companion object {
+//        fun fromResultRow(row: ResultRow) = Transaction {
+//
+//        }
+
+    }
+}
