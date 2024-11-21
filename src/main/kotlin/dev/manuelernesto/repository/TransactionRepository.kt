@@ -27,4 +27,28 @@ class TransactionRepository {
 
         inserted.resultedValues?.singleOrNull()?.let { Transaction.fromResultRow(it) }
     }
+
+    suspend fun getTransactionById(transactionId: UUID) {
+        // TODO
+    }
+
+    suspend fun getTransactionsByAccountId(accountId: UUID) {
+        //TODO
+    }
+
+    suspend fun getTransactionsByUserId(userId: UUID) {
+        //TODO
+    }
+
+    suspend fun getTransactionsByCategoryId(categoryId: UUID) {
+        //TODO
+    }
+
+    suspend fun updateTransaction(transactionId: UUID, transaction: Transaction) {
+        //TODO
+    }
+
+    suspend fun deleteTransaction(transactionId: UUID) {
+        //TODO
+    }
 }

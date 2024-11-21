@@ -112,3 +112,17 @@ Content-Type: application/json
 }
 
 
+### TRANSACTION
+###
+POST http://0.0.0.0:8080/api/v1/accounts/e4426524-7824-4bfa-9bf8-f45714d81ff/transactions
+Content-Type: application/json
+
+{
+  "accountId": "e4426524-7824-4bfa-9bf8-f45714d81ff",
+  "amount": 10,
+  "categoryId": "03836a8f-8d68-427a-bc3f-850adfc03999",
+  "type": "INCOME",
+  "note": "Personal Loan"
+}
+
+

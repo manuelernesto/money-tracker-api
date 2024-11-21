@@ -1,8 +1,11 @@
 package dev.manuelernesto.routes
 
+import dev.manuelernesto.model.Transaction
 import dev.manuelernesto.model.request.AccountBalanceRequest
 import dev.manuelernesto.model.request.AccountUpdateRequest
+import dev.manuelernesto.model.request.TransactionRequest
 import dev.manuelernesto.service.AccountService
+import dev.manuelernesto.service.TransactionService
 import dev.manuelernesto.util.validateUUIDAndGet
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
@@ -20,7 +23,7 @@ import io.ktor.server.routing.route
  * @version 1.0
  */
 
-fun Route.accountRoute(accountService: AccountService) {
+fun Route.accountRoute(accountService: AccountService, transactionService: TransactionService) {
     route("/api/v1/accounts") {
 
         get("/{id}") {
@@ -46,22 +49,34 @@ fun Route.accountRoute(accountService: AccountService) {
             call.respond(HttpStatusCode.OK)
         }
 
-        put("/{id}/deposit") {
-            val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
-            val balance = call.receive<AccountBalanceRequest>()
+//        put("/{id}/deposit") {
+//            val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
+//            val balance = call.receive<AccountBalanceRequest>()
+//
+//            accountService.addMoneyToAccount(validateUUIDAndGet(id), balance.balance)
+//            call.respond(HttpStatusCode.OK)
+//        }
 
-            accountService.addMoneyToAccount(validateUUIDAndGet(id), balance.balance)
-            call.respond(HttpStatusCode.OK)
+//        put("/{id}/withdraw") {
+//            val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
+//            val balance = call.receive<AccountBalanceRequest>()
+//
+//            accountService.withdrawMoneyToAccount(validateUUIDAndGet(id), balance.balance)
+//
+//            call.respond(HttpStatusCode.OK)
+//        }
+
+
+        //TODO refactor for support module
+        route("/{accountId}/transactions") {
+            post {
+                val accountId = call.parameters["accountId"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+                val transactionRequest = call.receive<TransactionRequest>()
+                transactionRequest.accountId = validateUUIDAndGet(accountId)
+                call.respond(HttpStatusCode.Created, transactionService.createTransaction(transactionRequest) as Any)
+            }
         }
 
-        put("/{id}/withdraw") {
-            val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
-            val balance = call.receive<AccountBalanceRequest>()
-
-            accountService.withdrawMoneyToAccount(validateUUIDAndGet(id), balance.balance)
-
-            call.respond(HttpStatusCode.OK)
-        }
 
     }
 }
