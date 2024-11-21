@@ -1,6 +1,7 @@
 package dev.manuelernesto.model
 
 import dev.manuelernesto.model.enums.TransactionType
+import dev.manuelernesto.model.schemas.Transactions
 import dev.manuelernesto.util.serializer.BigDecimalSerializer
 import dev.manuelernesto.util.serializer.LocalDateTimeSerializer
 import dev.manuelernesto.util.serializer.UUIDSerializer
@@ -17,7 +18,7 @@ import java.util.UUID
  */
 @Serializable
 data class Transaction(
-    @Serializable(with = UUIDSerializer::class) val id: UUID? = null,
+    @Serializable(with = UUIDSerializer::class) val transactionId: UUID? = null,
     @Serializable(with = UUIDSerializer::class) var accountId: UUID,
     @Serializable(with = BigDecimalSerializer::class) val amount: BigDecimal,
     @Serializable(with = UUIDSerializer::class) var categoryId: UUID,
@@ -26,9 +27,15 @@ data class Transaction(
     @Serializable(with = LocalDateTimeSerializer::class) val date: LocalDateTime? = null,
 ) {
     companion object {
-//        fun fromResultRow(row: ResultRow) = Transaction {
-//
-//        }
+        fun fromResultRow(row: ResultRow) = Transaction(
+            transactionId = row[Transactions.id],
+            accountId = row[Transactions.accountId],
+            amount = row[Transactions.amount],
+            categoryId = row[Transactions.categoryId],
+            type = row[Transactions.type],
+            note = row[Transactions.note],
+            date = row[Transactions.date]
+        )
 
     }
 }

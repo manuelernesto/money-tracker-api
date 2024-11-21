@@ -12,7 +12,7 @@ import org.jetbrains.exposed.sql.javatime.datetime
 
 object Transactions : Table("transaction") {
     val id = uuid("id")
-    val userId = (uuid("account_id") references Accounts.id)
+    val accountId = (uuid("account_id") references Accounts.id)
     val categoryId = (uuid("category_id") references Categories.id)
     val amount = decimal("amount", 10, 2)
     val type = enumerationByName("type", 20, TransactionType::class)
