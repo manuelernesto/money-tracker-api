@@ -14,8 +14,6 @@ import java.util.*
  */
 @Serializable
 class TransactionRequest(
-    @Serializable(with = UUIDSerializer::class)
-    var accountId: UUID,
     @Serializable(with = BigDecimalSerializer::class)
     val amount: BigDecimal,
     @Serializable(with = UUIDSerializer::class)
