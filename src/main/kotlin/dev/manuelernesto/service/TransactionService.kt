@@ -7,7 +7,6 @@ import dev.manuelernesto.model.enums.TransactionType.INCOME
 import dev.manuelernesto.model.request.TransactionRequest
 import dev.manuelernesto.repository.AccountRepository
 import dev.manuelernesto.repository.TransactionRepository
-import dev.manuelernesto.util.toTransaction
 import java.math.BigDecimal
 import java.util.*
 
@@ -29,7 +28,7 @@ class TransactionService(
             INCOME -> handleIncomeTransaction(accountId, transactionRequest.amount)
         }
 
-        return transactionRepository.createTransaction(transactionRequest.toTransaction())
+        return transactionRepository.createTransaction(accountId, transactionRequest)
     }
 
     private suspend fun validateAccount(accountId: UUID) {

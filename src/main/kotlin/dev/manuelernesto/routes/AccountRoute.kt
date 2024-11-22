@@ -41,11 +41,15 @@ fun Route.accountRoute(accountService: AccountService, transactionService: Trans
             accountService.closeAccount(validateUUIDAndGet(id))
             call.respond(HttpStatusCode.OK)
         }
+
         route("/{accountId}/transactions") {
             post {
                 val accountId = call.parameters["accountId"] ?: return@post call.respond(HttpStatusCode.BadRequest)
                 val transactionRequest = call.receive<TransactionRequest>()
-                call.respond(HttpStatusCode.Created, transactionService.createTransaction(validateUUIDAndGet(accountId),transactionRequest) as Any)
+                call.respond(
+                    HttpStatusCode.Created,
+                    transactionService.createTransaction(validateUUIDAndGet(accountId), transactionRequest) as Any
+                )
             }
         }
 

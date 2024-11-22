@@ -24,7 +24,7 @@ data class Transaction(
     @Serializable(with = UUIDSerializer::class) var categoryId: UUID,
     val type: TransactionType,
     val note: String? = null,
-    @Serializable(with = LocalDateTimeSerializer::class) val date: LocalDateTime? = LocalDateTime.now(),
+    @Serializable(with = LocalDateTimeSerializer::class) val date: LocalDateTime?,
 ) {
     companion object {
         fun fromResultRow(row: ResultRow) = Transaction(
