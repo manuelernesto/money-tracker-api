@@ -7,10 +7,11 @@ import dev.manuelernesto.repository.TransactionRepository
 import dev.manuelernesto.repository.UserRepository
 import dev.manuelernesto.routes.accountRoute
 import dev.manuelernesto.routes.categoryRoute
+import dev.manuelernesto.routes.transactionRoute
 import dev.manuelernesto.routes.userRoute
 import dev.manuelernesto.service.AccountService
 import dev.manuelernesto.service.CategoryService
-import dev.manuelernesto.service.TransactionService
+import dev.manuelernesto.service.TransactionManagerService
 import dev.manuelernesto.service.UserService
 import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
@@ -31,10 +32,11 @@ fun Application.configureRouting() {
         val accountService = AccountService(accountRepository, userRepository)
 
         val transactionRepository = TransactionRepository()
-        val transactionService = TransactionService(transactionRepository, accountRepository)
+        val transactionManagerService = TransactionManagerService(transactionRepository, accountRepository)
 
         userRoute(userService, accountService)
         categoryRoute(categoryService)
-        accountRoute(accountService, transactionService)
+        accountRoute(accountService, transactionManagerService)
+        transactionRoute(transactionManagerService)
     }
 }

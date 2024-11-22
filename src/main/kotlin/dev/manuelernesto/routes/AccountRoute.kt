@@ -3,7 +3,7 @@ package dev.manuelernesto.routes
 import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.model.request.TransactionRequest
 import dev.manuelernesto.service.AccountService
-import dev.manuelernesto.service.TransactionService
+import dev.manuelernesto.service.TransactionManagerService
 import dev.manuelernesto.util.validateUUIDAndGet
 import io.ktor.http.*
 import io.ktor.server.request.*
@@ -16,7 +16,7 @@ import io.ktor.server.routing.*
  * @version 1.0
  */
 
-fun Route.accountRoute(accountService: AccountService, transactionService: TransactionService) {
+fun Route.accountRoute(accountService: AccountService, transactionManagerService: TransactionManagerService) {
     route("/api/v1/accounts") {
 
         get("/{id}") {
@@ -48,7 +48,7 @@ fun Route.accountRoute(accountService: AccountService, transactionService: Trans
                 val transactionRequest = call.receive<TransactionRequest>()
                 call.respond(
                     HttpStatusCode.Created,
-                    transactionService.createTransaction(validateUUIDAndGet(accountId), transactionRequest) as Any
+                    transactionManagerService.createTransaction(validateUUIDAndGet(accountId), transactionRequest) as Any
                 )
             }
         }

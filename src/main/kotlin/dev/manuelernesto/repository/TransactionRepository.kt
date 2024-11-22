@@ -5,6 +5,7 @@ import dev.manuelernesto.model.Transaction
 import dev.manuelernesto.model.request.TransactionRequest
 import dev.manuelernesto.model.schemas.Transactions
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
 import java.time.LocalDateTime
 import java.util.*
 
@@ -30,9 +31,11 @@ class TransactionRepository {
         inserted.resultedValues?.singleOrNull()?.let { Transaction.fromResultRow(it) }
     }
 
-    suspend fun getTransactionById(transactionId: UUID) {
-        // TODO
+    suspend fun getTransactionById(transactionId: UUID): Transaction? = dbQuery {
+        Transactions.selectAll().where { Transactions.id eq transactionId }.map { Transaction.fromResultRow(it) }
+            .singleOrNull()
     }
+
 
     suspend fun getTransactionsByAccountId(accountId: UUID) {
         //TODO

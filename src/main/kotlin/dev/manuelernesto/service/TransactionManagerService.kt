@@ -15,7 +15,7 @@ import java.util.*
  * @date  21/11/24 10:23 PM
  * @version 1.0
  */
-class TransactionService(
+class TransactionManagerService(
     private val transactionRepository: TransactionRepository,
     private val accountRepository: AccountRepository
 ) {
@@ -31,16 +31,20 @@ class TransactionService(
         return transactionRepository.createTransaction(accountId, transactionRequest)
     }
 
-    private suspend fun validateAccount(accountId: UUID) {
-        accountRepository.getAccountById(accountId)
-            ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
-    }
+    suspend fun getTransaction(transactionId: UUID): Transaction? =
+        transactionRepository.getTransactionById(transactionId)
+            ?: throw AccountNotFoundException("Transaction with ID $transactionId does not exist!")
 
-    private fun handleExpenseTransaction(accountId: UUID, amount: BigDecimal) {
+
+    private suspend fun validateAccount(accountId: UUID) = accountRepository.getAccountById(accountId)
+        ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
+
+
+    private fun handleExpenseTransaction(accountId: UUID, amount: BigDecimal) =
         accountRepository.withdrawMoneyToAccount(accountId, amount)
-    }
 
-    private fun handleIncomeTransaction(accountId: UUID, amount: BigDecimal) {
+
+    private fun handleIncomeTransaction(accountId: UUID, amount: BigDecimal) =
         accountRepository.addMoneyToAccount(accountId, amount)
-    }
+
 }
