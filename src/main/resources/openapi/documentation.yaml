@@ -7,7 +7,7 @@ info:
     name: "Manuel Erensto"
     email: "hi@manuelernesto.dev"
 servers:
-- url: "http://0.0.0.0:8080"
+  - url: "http://0.0.0.0:8080"
 paths:
   /api/v1/accounts/{id}:
     delete:
@@ -139,6 +139,7 @@ paths:
                 type: "object"
   /api/v1/accounts/{id}/deposit:
     put:
+      deprecated: true
       description: ""
       parameters:
       - name: "id"
@@ -238,6 +239,47 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/accounts/{id}/withdraw:
+    put:
+      deprecated: true
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountBalanceRequest"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Conflict"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /api/v1/categories:
     get:
       description: ""

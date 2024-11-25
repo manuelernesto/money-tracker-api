@@ -43,12 +43,6 @@ fun Route.accountRoute(accountService: AccountService, transactionManagerService
             call.respond(HttpStatusCode.OK)
         }
 
-        post("/{id}/close") {
-            val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-            accountService.closeAccount(validateUUIDAndGet(id))
-            call.respond(HttpStatusCode.OK)
-        }
-
         put("/{id}/deposit") {
             val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
             val balance = call.receive<AccountBalanceRequest>()
@@ -57,6 +51,15 @@ fun Route.accountRoute(accountService: AccountService, transactionManagerService
             call.respond(HttpStatusCode.OK)
         }
 
+
+        put("/{id}/withdraw") {
+            val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
+            val balance = call.receive<AccountBalanceRequest>()
+
+            accountService.withdrawMoneyToAccount(validateUUIDAndGet(id), balance.balance)
+
+            call.respond(HttpStatusCode.OK)
+        }
 
         route("/{accountId}/transactions") {
             post {
