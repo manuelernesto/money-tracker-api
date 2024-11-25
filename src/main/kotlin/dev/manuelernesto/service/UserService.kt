@@ -5,6 +5,7 @@ import dev.manuelernesto.exceptions.UserCredentialException
 import dev.manuelernesto.exceptions.UserNotFoundException
 import dev.manuelernesto.model.PasswordUpdate
 import dev.manuelernesto.model.User
+import dev.manuelernesto.model.request.LoginRequest
 import dev.manuelernesto.repository.UserRepository
 import org.mindrot.jbcrypt.BCrypt
 import java.util.UUID
@@ -57,6 +58,13 @@ class UserService(private val userRepository: UserRepository) {
         user.password = hashPassword(user.password)
         return userRepository.save(user)
     }
+
+    suspend fun login(loginRequest: LoginRequest): User? =
+        userRepository.getUserByUsername(loginRequest.username)?.let {
+            if (BCrypt.checkpw(loginRequest.username, it.password)) it else null
+        } ?: throw UserNotFoundException(
+            "Incorrect credentials"
+        )
 
     suspend fun deleteUserById(userId: UUID) {
         //TODO verify if user is account with non-zero balance

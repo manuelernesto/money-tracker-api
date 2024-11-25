@@ -4,6 +4,7 @@ import dev.manuelernesto.config.dbQuery
 import dev.manuelernesto.model.User
 import dev.manuelernesto.model.schemas.Users
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
