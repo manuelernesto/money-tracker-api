@@ -399,6 +399,34 @@ paths:
             '*/*':
               schema:
                 type: "object"
+  /api/v1/login:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
   /api/v1/transactions/{id}:
     get:
       description: ""
@@ -621,34 +649,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  /login:
-    post:
-      description: ""
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LoginRequest"
-        required: true
-      responses:
-        "404":
-          description: "Not Found"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "400":
-          description: "Bad Request"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/Object"
 components:
   schemas:
     ErrorResponse:
@@ -727,6 +727,16 @@ components:
           type: "string"
       required:
       - "name"
+    LoginRequest:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+        password:
+          type: "string"
+      required:
+      - "username"
+      - "password"
     User:
       type: "object"
       properties:
@@ -783,13 +793,3 @@ components:
       required:
       - "oldPassword"
       - "newPassword"
-    LoginRequest:
-      type: "object"
-      properties:
-        username:
-          type: "string"
-        password:
-          type: "string"
-      required:
-      - "username"
-      - "password"

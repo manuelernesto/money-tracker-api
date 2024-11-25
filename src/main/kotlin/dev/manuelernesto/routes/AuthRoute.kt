@@ -15,8 +15,8 @@ import io.ktor.server.routing.*
  */
 
 fun Route.authRoute(userService: UserService) {
-    
-    route("/") {
+
+    route("/api/v1/") {
         post("login") {
             val loginRequest = call.receive<LoginRequest>()
             val response = userService.login(loginRequest)
