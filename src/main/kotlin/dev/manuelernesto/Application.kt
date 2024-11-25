@@ -1,6 +1,7 @@
 package dev.manuelernesto
 
 import dev.manuelernesto.config.configureDB
+import dev.manuelernesto.plugins.configureAuthentication
 import dev.manuelernesto.plugins.configureRouting
 import dev.manuelernesto.plugins.configureSerialization
 import io.ktor.server.application.*
@@ -12,6 +13,8 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     configureDB()
+    configureAuthentication()
     configureSerialization()
     configureRouting()
+
 }
