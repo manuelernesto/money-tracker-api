@@ -7,8 +7,10 @@ import dev.manuelernesto.exceptions.NegativeAmountException
 import dev.manuelernesto.exceptions.NoEnoughMoneyInAccountException
 import dev.manuelernesto.exceptions.UserNotFoundException
 import dev.manuelernesto.model.Account
+import dev.manuelernesto.model.enums.TransactionType
 import dev.manuelernesto.model.request.AccountRequest
 import dev.manuelernesto.model.request.AccountUpdateRequest
+import dev.manuelernesto.model.request.TransactionRequest
 import dev.manuelernesto.repository.AccountRepository
 import dev.manuelernesto.repository.UserRepository
 import dev.manuelernesto.util.toAccount
@@ -73,7 +75,7 @@ class AccountService(private val accountRepository: AccountRepository, private v
         val account = accountRepository.getAccountById(accountId)
             ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
 
-        if (amount < BigDecimal.ZERO) {
+        if (amount <= BigDecimal.ZERO) {
             throw NegativeAmountException("Amount must be more than zero!")
         }
 
@@ -85,10 +87,11 @@ class AccountService(private val accountRepository: AccountRepository, private v
     }
 
     suspend fun addMoneyToAccount(accountId: UUID, amount: BigDecimal) {
+
         val account = accountRepository.getAccountById(accountId)
             ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
 
-        if (amount < BigDecimal.ZERO) {
+        if (amount <= BigDecimal.ZERO) {
             throw NegativeAmountException("Amount must be more than zero!")
         }
 

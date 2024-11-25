@@ -1,10 +1,13 @@
 openapi: "3.1.0"
 info:
-  title: "money_tracker_api API"
-  description: "money_tracker_api API"
+  title: "Money Tracker API"
+  description: "Money Tracker API using Ktor 3.0 Server, Exposed, Swagger and OpenAPI"
   version: "1.0.0"
+  contact:
+    name: "Manuel Erensto"
+    email: "hi@manuelernesto.dev"
 servers:
-- url: "https://money_tracker_api"
+  - url: "http://0.0.0.0:8080"
 paths:
   /api/v1/accounts/{id}:
     delete:
@@ -136,6 +139,7 @@ paths:
                 type: "object"
   /api/v1/accounts/{id}/deposit:
     put:
+      deprecated: true
       description: ""
       parameters:
       - name: "id"
@@ -174,8 +178,70 @@ paths:
             '*/*':
               schema:
                 type: "object"
+  /api/v1/accounts/{accountId}/transactions:
+    get:
+      description: ""
+      parameters:
+      - name: "accountId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+    post:
+      description: ""
+      parameters:
+      - name: "accountId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionRequest"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Conflict"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/accounts/{id}/withdraw:
     put:
+      deprecated: true
       description: ""
       parameters:
       - name: "id"
@@ -333,6 +399,34 @@ paths:
             '*/*':
               schema:
                 type: "object"
+  /api/v1/transactions/{id}:
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/users:
     post:
       description: ""
@@ -554,6 +648,25 @@ components:
           $ref: "#/components/schemas/BigDecimal"
       required:
       - "balance"
+    TransactionRequest:
+      type: "object"
+      properties:
+        amount:
+          $ref: "#/components/schemas/BigDecimal"
+        categoryId:
+          type: "string"
+          format: "uuid"
+        type:
+          type: "string"
+          enum:
+          - "INCOME"
+          - "EXPENSE"
+        note:
+          type: "string"
+      required:
+      - "amount"
+      - "categoryId"
+      - "type"
     Category:
       type: "object"
       properties:
