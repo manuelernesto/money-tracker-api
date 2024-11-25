@@ -64,8 +64,16 @@ fun Route.accountRoute(accountService: AccountService, transactionManagerService
                 val transactionRequest = call.receive<TransactionRequest>()
                 call.respond(
                     HttpStatusCode.Created,
-                    transactionManagerService.createTransaction(validateUUIDAndGet(accountId), transactionRequest) as Any
+                    transactionManagerService.createTransaction(
+                        validateUUIDAndGet(accountId),
+                        transactionRequest
+                    ) as Any
                 )
+            }
+
+            get {
+                val accountId = call.parameters["accountId"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+                call.respond(transactionManagerService.getTransactionsByAccount(validateUUIDAndGet(accountId)) as Any)
             }
         }
 

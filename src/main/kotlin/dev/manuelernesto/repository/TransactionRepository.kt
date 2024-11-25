@@ -37,8 +37,8 @@ class TransactionRepository {
     }
 
 
-    suspend fun getTransactionsByAccountId(accountId: UUID) {
-        //TODO
+    suspend fun getTransactionsByAccountId(accountId: UUID): List<Transaction> = dbQuery {
+        Transactions.selectAll().where { Transactions.accountId eq accountId }.map { Transaction.fromResultRow(it) }
     }
 
     suspend fun getTransactionsByUserId(userId: UUID) {
