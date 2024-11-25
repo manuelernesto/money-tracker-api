@@ -1,5 +1,6 @@
 package dev.manuelernesto.routes
 
+import dev.manuelernesto.model.request.AccountBalanceRequest
 import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.model.request.TransactionRequest
 import dev.manuelernesto.service.AccountService
@@ -41,6 +42,21 @@ fun Route.accountRoute(accountService: AccountService, transactionManagerService
             accountService.closeAccount(validateUUIDAndGet(id))
             call.respond(HttpStatusCode.OK)
         }
+
+        post("/{id}/close") {
+            val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+            accountService.closeAccount(validateUUIDAndGet(id))
+            call.respond(HttpStatusCode.OK)
+        }
+
+        put("/{id}/deposit") {
+            val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
+            val balance = call.receive<AccountBalanceRequest>()
+
+            accountService.addMoneyToAccount(validateUUIDAndGet(id), balance.balance)
+            call.respond(HttpStatusCode.OK)
+        }
+
 
         route("/{accountId}/transactions") {
             post {

@@ -32,7 +32,7 @@ fun Application.configureRouting() {
         val accountService = AccountService(accountRepository, userRepository)
 
         val transactionRepository = TransactionRepository()
-        val transactionManagerService = TransactionManagerService(transactionRepository, accountRepository)
+        val transactionManagerService = TransactionManagerService(transactionRepository, accountService)
 
         userRoute(userService, accountService)
         categoryRoute(categoryService)

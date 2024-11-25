@@ -75,7 +75,7 @@ class AccountService(private val accountRepository: AccountRepository, private v
         val account = accountRepository.getAccountById(accountId)
             ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
 
-        if (amount < BigDecimal.ZERO) {
+        if (amount <= BigDecimal.ZERO) {
             throw NegativeAmountException("Amount must be more than zero!")
         }
 
@@ -91,7 +91,7 @@ class AccountService(private val accountRepository: AccountRepository, private v
         val account = accountRepository.getAccountById(accountId)
             ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
 
-        if (amount < BigDecimal.ZERO) {
+        if (amount <= BigDecimal.ZERO) {
             throw NegativeAmountException("Amount must be more than zero!")
         }
 

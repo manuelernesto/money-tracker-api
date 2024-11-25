@@ -108,7 +108,7 @@ PUT http://0.0.0.0:8080/api/v1/accounts/461915a6-ba3f-4ae9-ae1f-/withdraw
 Content-Type: application/json
 
 {
-  "balance": 1.00
+  "balance": -1.00
 }
 
 
@@ -118,10 +118,14 @@ POST http://0.0.0.0:8080/api/v1/accounts/e4426524-7824-4bfa-9bf8-f45714d81ff0/tr
 Content-Type: application/json
 
 {
-  "amount": 0.16,
+  "amount": 0,
   "categoryId": "03836a8f-8d68-427a-bc3f-850adfc03999",
-  "type": "EXPENSE",
+  "type": "INCOME",
   "note": "Personal Loan"
 }
+
+###
+GET http://0.0.0.0:8080/api/v1/transactions/e3b5ee44-072b-4e73-b983-fd051dd6f7bb
+Content-Type: application/json
 
 
