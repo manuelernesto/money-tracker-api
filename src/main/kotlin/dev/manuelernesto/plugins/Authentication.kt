@@ -32,7 +32,7 @@ fun Application.configureAuthentication() {
                     .build()
             )
             validate { credential ->
-                if (credential.payload.getClaim("username").asString() != null) {
+                if (credential.payload.getClaim("userId").asString() != null) {
                     JWTPrincipal(credential.payload)
                 } else {
                     null // Invalid token

@@ -143,3 +143,9 @@ Content-Type: application/json
   "password": "A2j34567?0"
 }
 
+
+###
+GET http://0.0.0.0:8080/api/v1/users/details/ola/ola
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJtb25leS10cmFja2VyLWFwcCIsImF1ZCI6Imt0b3ItdXNlcnMiLCJ1c2VySWQiOiJlYWI1YWZlYi1mMDRjLTRkNWMtYjY3My0xNjdhMGIyODMzNTIiLCJlbWFpbCI6ImhpQG1hbnVlbGVybmVzdG8uZGV2IiwiZXhwIjoxNzMyNTc1NjA0fQ.X_iB56Skn2qHqxGHICEBvLrTA6mtjdroURHqFG90nJc"
+
+

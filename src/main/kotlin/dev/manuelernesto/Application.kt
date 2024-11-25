@@ -13,7 +13,8 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     configureDB()
+    configureAuthentication()
     configureSerialization()
     configureRouting()
-    configureAuthentication()
+
 }
