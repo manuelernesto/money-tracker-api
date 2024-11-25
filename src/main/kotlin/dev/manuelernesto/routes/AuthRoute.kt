@@ -1,10 +1,11 @@
 package dev.manuelernesto.routes
 
 import dev.manuelernesto.model.request.LoginRequest
+import dev.manuelernesto.model.request.LoginResponse
 import dev.manuelernesto.plugins.generateJwtToken
 import dev.manuelernesto.service.UserService
-import io.ktor.http.*
-import io.ktor.server.request.receive
+import io.ktor.server.request.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 /**
@@ -14,22 +15,13 @@ import io.ktor.server.routing.*
  */
 
 fun Route.authRoute(userService: UserService) {
+    
     route("/") {
-        post("/login") {
+        post("login") {
             val loginRequest = call.receive<LoginRequest>()
-
-            userService.login(loginRequest)
-            val token = generateJwtToken()
-            // Generate JWT token
-            call.respond(HttpStatusCode.OK, LoginResponse(token))
-        }
-
-        post("/logout") {
-
-
-            // Generate JWT token
-            generateJwtToken()
-            call.respond(HttpStatusCode.OK, LoginResponse(token))
+            val response = userService.login(loginRequest)
+            val token = generateJwtToken(response?.userId!!, response.email!!)
+            call.respond(LoginResponse(token) as Any)
         }
     }
 }

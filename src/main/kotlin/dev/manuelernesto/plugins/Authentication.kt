@@ -13,6 +13,7 @@ import io.ktor.server.application.install
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import java.util.Date
+import java.util.UUID
 
 val secret = "your_secret_key"
 val issuer = "money-tracker-app"
@@ -41,12 +42,12 @@ fun Application.configureAuthentication() {
     }
 }
 
-fun generateJwtToken(userId: Int, email: String): String {
+fun generateJwtToken(userId: UUID, email: String): String {
     val algorithm = Algorithm.HMAC256(secret)
     return JWT.create()
         .withIssuer(issuer)
         .withAudience(audience)
-        .withClaim("userId", userId) // Embed userId
+        .withClaim("userId", userId.toString()) // Embed userId
         .withClaim("email", email)  // Embed email
         .withExpiresAt(Date(System.currentTimeMillis() + expirationTimeMs))
         .sign(algorithm)

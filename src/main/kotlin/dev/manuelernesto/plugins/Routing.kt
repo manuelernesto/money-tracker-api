@@ -6,6 +6,7 @@ import dev.manuelernesto.repository.CategoryRepository
 import dev.manuelernesto.repository.TransactionRepository
 import dev.manuelernesto.repository.UserRepository
 import dev.manuelernesto.routes.accountRoute
+import dev.manuelernesto.routes.authRoute
 import dev.manuelernesto.routes.categoryRoute
 import dev.manuelernesto.routes.transactionRoute
 import dev.manuelernesto.routes.userRoute
@@ -38,5 +39,6 @@ fun Application.configureRouting() {
         categoryRoute(categoryService)
         accountRoute(accountService, transactionManagerService)
         transactionRoute(transactionManagerService)
+        authRoute(userService)
     }
 }

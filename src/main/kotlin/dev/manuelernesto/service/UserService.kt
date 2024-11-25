@@ -59,12 +59,21 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.save(user)
     }
 
-    suspend fun login(loginRequest: LoginRequest): User? =
-        userRepository.getUserByUsername(loginRequest.username)?.let {
-            if (BCrypt.checkpw(loginRequest.username, it.password)) it else null
-        } ?: throw UserNotFoundException(
-            "Incorrect credentials"
-        )
+    suspend fun login(loginRequest: LoginRequest): User? {
+        val user = userRepository.getUserByUsername(loginRequest.username)
+            ?: throw UserNotFoundException("There are not user registered with this username")
+        if (!BCrypt.checkpw(loginRequest.password, user.password)) {
+            throw UserCredentialException("Incorrect credentials")
+        }
+        return user
+
+    }
+
+//        username    ?.let {
+//            if (BCrypt.checkpw(loginRequest.username, it.password)) it else null
+//        } ?: throw UserNotFoundException(
+//            "Incorrect credentials"
+//        )
 
     suspend fun deleteUserById(userId: UUID) {
         //TODO verify if user is account with non-zero balance

@@ -4,7 +4,7 @@ POST http://0.0.0.0:8080/api/v1/users
 Content-Type: application/json
 
 {
-  "username": "manuelernest01",
+  "username": "manuel.ernesto",
   "password": "A2j34567?0",
   "email": "hi@manuelernesto.dev"
 }
@@ -132,4 +132,14 @@ Content-Type: application/json
 ###
 GET http://0.0.0.0:8080/api/v1/accounts/e4426524-7824-4bfa-9bf8-f45714d81ff0/transactions
 Content-Type: application/json
+
+### USERS
+
+POST http://0.0.0.0:8080/login
+Content-Type: application/json
+
+{
+  "username": "manuel.ernesto",
+  "password": "A2j34567?0"
+}
 
