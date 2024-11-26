@@ -13,7 +13,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 
 
-const val JWT_EXPIRATION_TIME_MS = 36_000_00 // 1 hour
+const val JWT_EXPIRATION_TIME_MS = 9_000_00 //15 min
 const val JWT_AUDIENCE = "ktor-users"
 const val JWT_SECRET = "your_secret_key"
 const val JWT_ISSUER = "money-tracker-app"
