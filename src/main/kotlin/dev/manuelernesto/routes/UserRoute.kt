@@ -3,6 +3,7 @@ package dev.manuelernesto.routes
 import dev.manuelernesto.model.PasswordUpdate
 import dev.manuelernesto.model.User
 import dev.manuelernesto.model.request.AccountRequest
+import dev.manuelernesto.plugins.JWT_CONFIG_NAME
 import dev.manuelernesto.service.AccountService
 import dev.manuelernesto.service.UserService
 import dev.manuelernesto.util.toUserResponse
@@ -28,7 +29,7 @@ import io.ktor.server.routing.route
 
 fun Route.userRoute(userService: UserService, accountService: AccountService) {
     route("/api/v1/users") {
-        authenticate("auth-jwt") {
+        authenticate(JWT_CONFIG_NAME) {
 
 
             get("/details") {

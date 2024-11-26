@@ -1,6 +1,7 @@
 package dev.manuelernesto.routes
 
 import dev.manuelernesto.model.Category
+import dev.manuelernesto.plugins.JWT_CONFIG_NAME
 import dev.manuelernesto.service.CategoryService
 import dev.manuelernesto.util.validateUUIDAndGet
 import io.ktor.http.HttpStatusCode
@@ -22,7 +23,7 @@ import io.ktor.server.routing.route
 
 fun Route.categoryRoute(categoryService: CategoryService) {
     route("/api/v1/categories") {
-        authenticate("auth-jwt") {
+        authenticate(JWT_CONFIG_NAME) {
             get {
                 call.respond(categoryService.getAllCategories() as Any)
             }
