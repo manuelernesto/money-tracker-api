@@ -19,9 +19,10 @@ fun Route.authRoute(userService: UserService) {
     route("/api/v1/") {
         post("login") {
             val loginRequest = call.receive<LoginRequest>()
-            val response = userService.login(loginRequest)
-            val token = generateJwtToken(response?.userId!!, response.email!!)
-            call.respond(LoginResponse(token) as Any)
+            userService.login(loginRequest)?.let {
+                val jwtToken = generateJwtToken(it.userId!!, it.email!!)
+                call.respond(LoginResponse(jwtToken) as Any)
+            }
         }
     }
 }
