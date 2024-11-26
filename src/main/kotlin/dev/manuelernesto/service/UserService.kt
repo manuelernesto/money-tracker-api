@@ -69,12 +69,6 @@ class UserService(private val userRepository: UserRepository) {
 
     }
 
-//        username    ?.let {
-//            if (BCrypt.checkpw(loginRequest.username, it.password)) it else null
-//        } ?: throw UserNotFoundException(
-//            "Incorrect credentials"
-//        )
-
     suspend fun deleteUserById(userId: UUID) {
         //TODO verify if user is account with non-zero balance
 
