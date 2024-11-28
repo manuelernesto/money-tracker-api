@@ -3,6 +3,7 @@ package dev.manuelernesto.routes
 import dev.manuelernesto.model.request.AccountBalanceRequest
 import dev.manuelernesto.model.request.AccountUpdateRequest
 import dev.manuelernesto.model.request.TransactionRequest
+import dev.manuelernesto.plugins.JWT_CONFIG_NAME
 import dev.manuelernesto.service.AccountService
 import dev.manuelernesto.service.TransactionManagerService
 import dev.manuelernesto.util.validateUUIDAndGet
@@ -20,7 +21,7 @@ import io.ktor.server.routing.*
 
 fun Route.accountRoute(accountService: AccountService, transactionManagerService: TransactionManagerService) {
     route("/api/v1/accounts") {
-        authenticate("auth-jwt") {
+        authenticate(JWT_CONFIG_NAME) {
             get("/{id}") {
                 val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
                 call.respond(accountService.getAccount(validateUUIDAndGet(id)) as Any)

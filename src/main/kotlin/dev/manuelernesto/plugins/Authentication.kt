@@ -8,47 +8,38 @@ package dev.manuelernesto.plugins
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import io.ktor.server.application.Application
-import io.ktor.server.application.install
+import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
-import java.util.Date
-import java.util.UUID
 
-val secret = "your_secret_key"
-val issuer = "money-tracker-app"
-val audience = "ktor-users"
-val expirationTimeMs = 36_000_00 // 1 hour
+
+const val JWT_EXPIRATION_TIME_MS = 9_000_00 //15 min
+const val JWT_AUDIENCE = "ktor-users"
+const val JWT_SECRET = "your_secret_key"
+const val JWT_ISSUER = "money-tracker-app"
+const val JWT_CONFIG_NAME = "auth-jwt"
+const val JWT_REALM = "money-tracker-app"
+const val JWT_USER_ID = "userId"
+const val JWT_EMAIL = "email"
 
 fun Application.configureAuthentication() {
     install(Authentication) {
-        jwt("auth-jwt") {
-            realm = "money-tracker-app"
+        jwt(JWT_CONFIG_NAME) {
+            realm = JWT_REALM
             verifier(
                 JWT
-                    .require(Algorithm.HMAC256(secret))
-                    .withIssuer(issuer)
-                    .withAudience(audience)
+                    .require(Algorithm.HMAC256(JWT_SECRET))
+                    .withIssuer(JWT_ISSUER)
+                    .withAudience(JWT_AUDIENCE)
                     .build()
             )
             validate { credential ->
-                if (credential.payload.getClaim("userId").asString() != null) {
+                if (credential.payload.getClaim(JWT_USER_ID).asString() != null) {
                     JWTPrincipal(credential.payload)
                 } else {
-                    null // Invalid token
+                    null
                 }
             }
         }
     }
-}
-
-fun generateJwtToken(userId: UUID, email: String): String {
-    val algorithm = Algorithm.HMAC256(secret)
-    return JWT.create()
-        .withIssuer(issuer)
-        .withAudience(audience)
-        .withClaim("userId", userId.toString()) // Embed userId
-        .withClaim("email", email)  // Embed email
-        .withExpiresAt(Date(System.currentTimeMillis() + expirationTimeMs))
-        .sign(algorithm)
 }

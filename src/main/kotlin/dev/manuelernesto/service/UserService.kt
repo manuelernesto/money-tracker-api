@@ -1,5 +1,6 @@
 package dev.manuelernesto.service
 
+import dev.manuelernesto.exceptions.UnAuthorizeException
 import dev.manuelernesto.exceptions.UserAlreadyExistsException
 import dev.manuelernesto.exceptions.UserCredentialException
 import dev.manuelernesto.exceptions.UserNotFoundException
@@ -63,7 +64,7 @@ class UserService(private val userRepository: UserRepository) {
         val user = userRepository.getUserByUsername(loginRequest.username)
             ?: throw UserNotFoundException("There are not user registered with this username")
         if (!BCrypt.checkpw(loginRequest.password, user.password)) {
-            throw UserCredentialException("Incorrect credentials")
+            throw UnAuthorizeException("Incorrect credentials")
         }
         return user
 

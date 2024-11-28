@@ -241,8 +241,8 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
   /api/v1/accounts/{id}/withdraw:
     put:
-      deprecated: true
       description: ""
+      deprecated: true
       parameters:
       - name: "id"
         in: "path"
@@ -415,8 +415,8 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-        "400":
-          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
           content:
             '*/*':
               schema:

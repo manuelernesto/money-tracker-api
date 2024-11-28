@@ -1,8 +1,8 @@
 package dev.manuelernesto.routes
 
+import dev.manuelernesto.config.generateJwtToken
 import dev.manuelernesto.model.request.LoginRequest
 import dev.manuelernesto.model.request.LoginResponse
-import dev.manuelernesto.plugins.generateJwtToken
 import dev.manuelernesto.service.UserService
 import io.ktor.server.request.*
 import io.ktor.server.response.*
