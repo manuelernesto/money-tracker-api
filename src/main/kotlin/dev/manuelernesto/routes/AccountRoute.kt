@@ -19,7 +19,7 @@ import io.ktor.server.routing.*
  * @version 1.0
  */
 
-fun Route.accountRoute(accountService: AccountService, transactionManagerService: TransactionManagerService) {
+fun Route.accountRoute(accountService: AccountService) {
     route("/api/v1/accounts") {
         authenticate(JWT_CONFIG_NAME) {
             get("/{id}") {
@@ -61,25 +61,6 @@ fun Route.accountRoute(accountService: AccountService, transactionManagerService
                 accountService.withdrawMoneyToAccount(validateUUIDAndGet(id), balance.balance)
 
                 call.respond(HttpStatusCode.OK)
-            }
-
-            route("/{accountId}/transactions") {
-                post {
-                    val accountId = call.parameters["accountId"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-                    val transactionRequest = call.receive<TransactionRequest>()
-                    call.respond(
-                        HttpStatusCode.Created,
-                        transactionManagerService.createTransaction(
-                            validateUUIDAndGet(accountId),
-                            transactionRequest
-                        ) as Any
-                    )
-                }
-
-                get {
-                    val accountId = call.parameters["accountId"] ?: return@get call.respond(HttpStatusCode.BadRequest)
-                    call.respond(transactionManagerService.getTransactionsByAccount(validateUUIDAndGet(accountId)) as Any)
-                }
             }
 
         }

@@ -37,7 +37,7 @@ fun Application.configureRouting() {
 
         userRoute(userService, accountService)
         categoryRoute(categoryService)
-        accountRoute(accountService, transactionManagerService)
+        accountRoute(accountService)
         transactionRoute(transactionManagerService)
         authRoute(userService)
     }
