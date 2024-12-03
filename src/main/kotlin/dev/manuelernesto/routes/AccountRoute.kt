@@ -2,13 +2,11 @@ package dev.manuelernesto.routes
 
 import dev.manuelernesto.model.request.AccountBalanceRequest
 import dev.manuelernesto.model.request.AccountUpdateRequest
-import dev.manuelernesto.model.request.TransactionRequest
 import dev.manuelernesto.plugins.JWT_CONFIG_NAME
 import dev.manuelernesto.service.AccountService
-import dev.manuelernesto.service.TransactionManagerService
 import dev.manuelernesto.util.validateUUIDAndGet
 import io.ktor.http.*
-import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
