@@ -12,7 +12,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 /**
- * @author  Manuel Ernesto (manuelernest0)
+ * @author  Manuel Ernesto (manuelernesto.dev)
  * @date  19/10/24 8:42 PM
  * @version 1.0
  */
