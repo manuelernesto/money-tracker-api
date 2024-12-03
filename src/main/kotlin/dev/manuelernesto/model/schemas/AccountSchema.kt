@@ -22,6 +22,5 @@ object Accounts : Table("account") {
     val isClosed = bool("is_closed")
     val createdAt = datetime("created_at")
     val updatedAt = datetime("updated_at").nullable()
-
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }

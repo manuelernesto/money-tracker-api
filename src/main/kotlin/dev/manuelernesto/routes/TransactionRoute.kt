@@ -50,5 +50,5 @@ fun Route.transactionRoute(transactionManagerService: TransactionManagerService)
         }
     }
 
-    
+
 }
