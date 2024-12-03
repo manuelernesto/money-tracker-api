@@ -29,7 +29,7 @@ fun Route.transactionRoute(transactionManagerService: TransactionManagerService)
 
     route("/api/v1/accounts/{accountId}/transactions") {
         authenticate(JWT_CONFIG_NAME) {
-            
+
             post {
                 val accountId = call.parameters["accountId"] ?: return@post call.respond(HttpStatusCode.BadRequest)
                 val transactionRequest = call.receive<TransactionRequest>()
@@ -49,4 +49,6 @@ fun Route.transactionRoute(transactionManagerService: TransactionManagerService)
 
         }
     }
+
+    
 }
