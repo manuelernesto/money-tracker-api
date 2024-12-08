@@ -3,7 +3,9 @@ package dev.manuelernesto.repository
 import dev.manuelernesto.config.dbQuery
 import dev.manuelernesto.model.Transaction
 import dev.manuelernesto.model.request.TransactionRequest
+import dev.manuelernesto.model.schemas.Accounts
 import dev.manuelernesto.model.schemas.Transactions
+import dev.manuelernesto.model.schemas.Users
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import java.time.LocalDateTime
@@ -41,8 +43,9 @@ class TransactionRepository {
         Transactions.selectAll().where { Transactions.accountId eq accountId }.map { Transaction.fromResultRow(it) }
     }
 
-    suspend fun getTransactionsByUserId(userId: UUID) {
-        //TODO
+    suspend fun getTransactionsByUserId(userId: UUID): List<Transaction> = dbQuery {
+        (Transactions innerJoin Accounts innerJoin Users).selectAll().where { Users.id eq userId }
+            .map { Transaction.fromResultRow(it) }
     }
 
     suspend fun getTransactionsByCategoryId(categoryId: UUID) {

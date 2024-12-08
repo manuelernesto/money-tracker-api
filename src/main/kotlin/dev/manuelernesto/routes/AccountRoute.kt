@@ -2,24 +2,22 @@ package dev.manuelernesto.routes
 
 import dev.manuelernesto.model.request.AccountBalanceRequest
 import dev.manuelernesto.model.request.AccountUpdateRequest
-import dev.manuelernesto.model.request.TransactionRequest
 import dev.manuelernesto.plugins.JWT_CONFIG_NAME
 import dev.manuelernesto.service.AccountService
-import dev.manuelernesto.service.TransactionManagerService
 import dev.manuelernesto.util.validateUUIDAndGet
 import io.ktor.http.*
-import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 /**
- * @author  Manuel Ernesto (manuelernest0)
+ * @author  Manuel Ernesto (manuelernesto.dev)
  * @date  19/10/24 8:42 PM
  * @version 1.0
  */
 
-fun Route.accountRoute(accountService: AccountService, transactionManagerService: TransactionManagerService) {
+fun Route.accountRoute(accountService: AccountService) {
     route("/api/v1/accounts") {
         authenticate(JWT_CONFIG_NAME) {
             get("/{id}") {
@@ -53,7 +51,6 @@ fun Route.accountRoute(accountService: AccountService, transactionManagerService
                 call.respond(HttpStatusCode.OK)
             }
 
-
             put("/{id}/withdraw") {
                 val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
                 val balance = call.receive<AccountBalanceRequest>()
@@ -62,26 +59,6 @@ fun Route.accountRoute(accountService: AccountService, transactionManagerService
 
                 call.respond(HttpStatusCode.OK)
             }
-
-            route("/{accountId}/transactions") {
-                post {
-                    val accountId = call.parameters["accountId"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-                    val transactionRequest = call.receive<TransactionRequest>()
-                    call.respond(
-                        HttpStatusCode.Created,
-                        transactionManagerService.createTransaction(
-                            validateUUIDAndGet(accountId),
-                            transactionRequest
-                        ) as Any
-                    )
-                }
-
-                get {
-                    val accountId = call.parameters["accountId"] ?: return@get call.respond(HttpStatusCode.BadRequest)
-                    call.respond(transactionManagerService.getTransactionsByAccount(validateUUIDAndGet(accountId)) as Any)
-                }
-            }
-
         }
     }
 }
