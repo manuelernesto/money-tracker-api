@@ -27,9 +27,17 @@ fun Route.transactionRoute(transactionManagerService: TransactionManagerService)
         }
     }
 
+    route("/api/v1/users/{userId}/transactions") {
+        authenticate(JWT_CONFIG_NAME) {
+            get {
+                val userId = call.parameters["userId"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+                call.respond(transactionManagerService.getTransactionByUser(validateUUIDAndGet(userId)) as Any)
+            }
+        }
+    }
+
     route("/api/v1/accounts/{accountId}/transactions") {
         authenticate(JWT_CONFIG_NAME) {
-
             post {
                 val accountId = call.parameters["accountId"] ?: return@post call.respond(HttpStatusCode.BadRequest)
                 val transactionRequest = call.receive<TransactionRequest>()
@@ -46,7 +54,6 @@ fun Route.transactionRoute(transactionManagerService: TransactionManagerService)
                 val accountId = call.parameters["accountId"] ?: return@get call.respond(HttpStatusCode.BadRequest)
                 call.respond(transactionManagerService.getTransactionsByAccount(validateUUIDAndGet(accountId)) as Any)
             }
-
         }
     }
 

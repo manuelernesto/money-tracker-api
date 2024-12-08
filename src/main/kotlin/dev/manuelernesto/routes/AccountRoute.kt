@@ -51,7 +51,6 @@ fun Route.accountRoute(accountService: AccountService) {
                 call.respond(HttpStatusCode.OK)
             }
 
-
             put("/{id}/withdraw") {
                 val id = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
                 val balance = call.receive<AccountBalanceRequest>()
@@ -60,7 +59,6 @@ fun Route.accountRoute(accountService: AccountService) {
 
                 call.respond(HttpStatusCode.OK)
             }
-
         }
     }
 }

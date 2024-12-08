@@ -5,7 +5,6 @@ import dev.manuelernesto.model.Transaction
 import dev.manuelernesto.model.enums.TransactionType.EXPENSE
 import dev.manuelernesto.model.enums.TransactionType.INCOME
 import dev.manuelernesto.model.request.TransactionRequest
-import dev.manuelernesto.repository.AccountRepository
 import dev.manuelernesto.repository.TransactionRepository
 import java.math.BigDecimal
 import java.util.*
@@ -17,7 +16,8 @@ import java.util.*
  */
 class TransactionManagerService(
     private val transactionRepository: TransactionRepository,
-    private val accountService: AccountService
+    private val accountService: AccountService,
+    private val userService: UserService
 ) {
 
     suspend fun createTransaction(accountId: UUID, transactionRequest: TransactionRequest): Transaction? {
@@ -39,6 +39,12 @@ class TransactionManagerService(
             ?: throw AccountNotFoundException("Transaction with ID $transactionId does not exist!")
 
 
+    suspend fun getTransactionByUser(userId: UUID): List<Transaction>? {
+        return userService.getUserById(userId)?.let { _ ->
+            transactionRepository.getTransactionsByUserId(userId)
+        }
+    }
+
     private suspend fun validateAccount(accountId: UUID) = accountService.getAccount(accountId)
         ?: throw AccountNotFoundException("Account with ID $accountId does not exist!")
 
@@ -49,5 +55,6 @@ class TransactionManagerService(
 
     private suspend fun handleIncomeTransaction(accountId: UUID, amount: BigDecimal) =
         accountService.addMoneyToAccount(accountId, amount)
+
 
 }

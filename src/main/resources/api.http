@@ -130,6 +130,11 @@ Content-Type: application/json
 
 
 ###
+GET http://0.0.0.0:8080/api/v1/users/9d3f6ba7-3fad-432d-92c1-d77312bd9cf6/transactions
+Content-Type: application/json
+
+
+###
 GET http://0.0.0.0:8080/api/v1/accounts/e4426524-7824-4bfa-9bf8-f45714d81ff0/transactions
 Content-Type: application/json
 
