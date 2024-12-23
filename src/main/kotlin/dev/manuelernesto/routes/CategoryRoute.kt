@@ -8,12 +8,8 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.authenticate
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
-import io.ktor.server.routing.Route
-import io.ktor.server.routing.delete
-import io.ktor.server.routing.get
-import io.ktor.server.routing.post
-import io.ktor.server.routing.put
-import io.ktor.server.routing.route
+import io.ktor.server.routing.*
+import org.koin.ktor.ext.inject
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -21,7 +17,10 @@ import io.ktor.server.routing.route
  * @version 1.0
  */
 
-fun Route.categoryRoute(categoryService: CategoryService) {
+fun Route.categoryRoute() {
+
+    val categoryService by application.inject<CategoryService>()
+
     route("/api/v1/categories") {
         authenticate(JWT_CONFIG_NAME) {
             get {

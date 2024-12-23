@@ -1,10 +1,10 @@
-
 val kotlin_version: String by project
 val logback_version: String by project
 val postgres_version: String by project
 val h2_version: String by project
 val exposed_version: String by project
 val jbcrypt_version: String by project
+val koin_ktor: String by project
 
 plugins {
 //    kotlin("jvm") version "2.0.21"
@@ -48,6 +48,11 @@ dependencies {
     implementation("io.ktor:ktor-server-auth-jwt")
 
     implementation("org.mindrot:jbcrypt:$jbcrypt_version")
+
+    // Koin for Ktor
+    implementation("io.insert-koin:koin-ktor:$koin_ktor")
+    // SLF4J Logger
+    implementation("io.insert-koin:koin-logger-slf4j:$koin_ktor")
 
     testImplementation("io.ktor:ktor-server-test-host-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")

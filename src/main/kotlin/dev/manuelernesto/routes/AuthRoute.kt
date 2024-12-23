@@ -12,6 +12,7 @@ import io.ktor.server.auth.authenticate
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.koin.ktor.ext.inject
 
 /**
  * @author  Manuel Ernesto (manuelernest0)
@@ -19,7 +20,9 @@ import io.ktor.server.routing.*
  * @version 1.0
  */
 
-fun Route.authRoute(userService: UserService) {
+fun Route.authRoute() {
+
+    val userService by application.inject<UserService>()
 
     route("/api/v1/auth/") {
 
