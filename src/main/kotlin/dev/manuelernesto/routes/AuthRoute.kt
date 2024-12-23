@@ -36,6 +36,5 @@ fun Route.authRoute(userService: UserService) {
                 call.respond(LoginResponse(jwtToken) as Any)
             }
         }
-
     }
 }
