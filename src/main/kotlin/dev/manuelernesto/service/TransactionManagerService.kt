@@ -34,7 +34,7 @@ class TransactionManagerService(
     suspend fun getTransactionsByAccount(accountId: UUID) =
         transactionRepository.getTransactionsByAccountId(accountId)
 
-    suspend fun getTransaction(transactionId: UUID): Transaction? =
+    suspend fun getTransaction(transactionId: UUID): Transaction =
         transactionRepository.getTransactionById(transactionId)
             ?: throw AccountNotFoundException("Transaction with ID $transactionId does not exist!")
 
