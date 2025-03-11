@@ -108,4 +108,13 @@ fun StatusPagesConfig.statusPageErrorConfig() {
         call.respond(HttpStatusCode.BadRequest, errorResponse)
     }
 
+    //Authentication
+    exception<UnAuthorizeException> { call, cause ->
+        val errorResponse = ErrorResponse(
+            status = HttpStatusCode.Unauthorized.value,
+            message = cause.message.toString()
+        )
+        call.respond(HttpStatusCode.Unauthorized, errorResponse)
+    }
+
 }

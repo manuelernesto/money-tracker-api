@@ -1,10 +1,12 @@
 package dev.manuelernesto.service
 
+import dev.manuelernesto.exceptions.UnAuthorizeException
 import dev.manuelernesto.exceptions.UserAlreadyExistsException
 import dev.manuelernesto.exceptions.UserCredentialException
 import dev.manuelernesto.exceptions.UserNotFoundException
 import dev.manuelernesto.model.PasswordUpdate
 import dev.manuelernesto.model.User
+import dev.manuelernesto.model.request.LoginRequest
 import dev.manuelernesto.repository.UserRepository
 import org.mindrot.jbcrypt.BCrypt
 import java.util.UUID
@@ -56,6 +58,16 @@ class UserService(private val userRepository: UserRepository) {
 
         user.password = hashPassword(user.password)
         return userRepository.save(user)
+    }
+
+    suspend fun login(loginRequest: LoginRequest): User? {
+        val user = userRepository.getUserByUsername(loginRequest.username)
+            ?: throw UserNotFoundException("There are not user registered with this username")
+        if (!BCrypt.checkpw(loginRequest.password, user.password)) {
+            throw UnAuthorizeException("Incorrect credentials")
+        }
+        return user
+
     }
 
     suspend fun deleteUserById(userId: UUID) {
